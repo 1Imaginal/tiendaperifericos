@@ -4,7 +4,8 @@
     <?php
       include("../conexion.php");
 
-      $query = "SELECT m.modelo, f.nombre AS fabricante, m.precio FROM mouse m INNER JOIN fabricante f ON f.id=m.idFab";
+      $query = "SELECT p.id, p.modelo, p.idCat, f.nombre AS fabricante, p.precio, p.img FROM productos p INNER JOIN fabricante f ON f.id=p.idFab WHERE
+      idCat = 1";
 
       if(mysqli_connect_errno()){ 
         echo "<div class=\"alert alert-success\"><strong>Error</strong>" . mysqli_connect_error() . "</div>";
@@ -45,26 +46,31 @@
         </div>
       </nav>
       <div class="container my-4">
-        <table class="table table striped">
-          <thead>
-            <tr>
-              <th>Modelo</th>
-              <th>Fabricante</th>
-              <th>Precio</th>
-            </tr>
-          </thead>
-          <tbody>
-          <?php
+        <div class="row my-4">
+            <?php
+                $contador = 0;
                 while($row = mysqli_fetch_array($result)){
-                  echo "<tr>";
-                  echo "<td>" . $row['modelo'] . "</td>";
-                  echo "<td>" . $row['fabricante'] . "</td>";
-                  echo "<td>" . $row['precio'] . '$' .  "</td>";
-                  echo "</tr>";
+                    echo "<div class=\"col-4\">";
+                    echo "<div class=\"card\" style=\"width:400px\">";
+                    echo "<a href=\"detalles.php?id=" . $row['id'] . "&idCat=" . $row['idCat']. "\">";
+                    echo "<img class=\"card-img-top\" src=\"../rsc/productos/" . $row['img'] . "\" alt=\"" . $row['modelo'] . "\">";
+                    echo "</a>";
+                    echo "<div class=\"card-body\">";
+                    echo "<h4 class=\"card-title\">" . $row['modelo'] . "</h4>";
+                    echo "<p class=\"card-text\">" . $row['fabricante'] . "</p>";
+                    echo "<h5 class=\"card-text\">" . $row['precio'] . "$</h5>";
+                    echo "<a href=\"#\" class=\"btn btn-primary\">Agregar al carrito</a>";
+                    echo "</div></div></div>";
+                    
+                    $contador++;
+    
+                    if ($contador%3==0) {
+                        echo "</div>";
+                        echo "<div class=\"row my-4\">";
+                    }
                 }
-                ?>
-          </tbody>
-        </table>
+            ?>
+        </div>
       </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
