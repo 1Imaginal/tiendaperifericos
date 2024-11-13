@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
     <?php
-      include("../conexion.php");
+      include("conexion.php");
 
+      $idCat = $_GET['idCat'];
       $query = "SELECT p.id, p.modelo, p.idCat, f.nombre AS fabricante, p.precio, p.img FROM productos p INNER JOIN fabricante f ON f.id=p.idFab WHERE
-      idCat = 1";
+      idCat = $idCat";
 
       if(mysqli_connect_errno()){ 
         echo "<div class=\"alert alert-success\"><strong>Error</strong>" . mysqli_connect_error() . "</div>";
@@ -22,20 +23,20 @@
 <body>
   <nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #99846e;">
         <div class="container-fluid">
-          <a class="navbar-brand" href="../index.html">Tienda perifericos</a>
+          <a class="navbar-brand" href="index.html">Tienda perifericos</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="mynavbar">
-            <ul class="navbar-nav me-auto">
+          <ul class="navbar-nav me-auto">
               <li class="nav-item">
-                <a class="nav-link active" href="mouse.php">Mouse</a>
+                <a class="nav-link" href="productos.php?idCat=1">Mouse</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="teclado.php">Teclado</a>
+                <a class="nav-link" href="productos.php?idCat=2">Teclado</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="mousepad.php">Mousepad</a>
+                <a class="nav-link" href="productos.php?idCat=3">Mousepad</a>
               </li>
             </ul>
             <form class="d-flex">
@@ -45,10 +46,10 @@
             <div class="d-flex flex-row-reverse">
               <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                  <a class="nav-link" href="../registro.html">Registrarse</a>
+                  <a class="nav-link" href="registro.html">Registrarse</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="../login.html">Iniciar Sesion</a>
+                  <a class="nav-link" href="login.html">Iniciar Sesion</a>
                 </li>
               </ul>
             </div>
@@ -63,7 +64,7 @@
                     echo "<div class=\"col-4\">";
                     echo "<div class=\"card\" style=\"width:400px\">";
                     echo "<a href=\"detalles.php?id=" . $row['id'] . "&idCat=" . $row['idCat']. "\">";
-                    echo "<img class=\"card-img-top\" src=\"../rsc/productos/" . $row['img'] . "\" alt=\"" . $row['modelo'] . "\">";
+                    echo "<img class=\"card-img-top\" src=\"rsc/productos/" . $row['img'] . "\" alt=\"" . $row['modelo'] . "\">";
                     echo "</a>";
                     echo "<div class=\"card-body\">";
                     echo "<h4 class=\"card-title\">" . $row['modelo'] . "</h4>";
