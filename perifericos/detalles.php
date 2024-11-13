@@ -23,28 +23,38 @@
     <title>Tienda</title>
 </head>
 <body>
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #99846e;">  
         <div class="container-fluid">
-          <a class="navbar-brand" href="index.html">Tienda perifericos</a>
+          <a class="navbar-brand" href="../index.html">Tienda perifericos</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="mynavbar">
             <ul class="navbar-nav me-auto">
               <li class="nav-item">
-                <a class="nav-link" href="perifericos/mouse.php">Mouse</a>
+                <a class="nav-link" href="mouse.php">Mouse</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="perifericos/teclado.php">Teclado</a>
+                <a class="nav-link" href="teclado.php">Teclado</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="perifericos/mousepad.php">Mousepad</a>
+                <a class="nav-link" href="mousepad.php">Mousepad</a>
               </li>
             </ul>
             <form class="d-flex">
               <input class="form-control me-2" type="text" placeholder="Busca un producto">
               <button class="btn btn-primary" type="button" action="resultado.php" method="get">Buscar</button>
             </form>
+            <div class="d-flex flex-row-reverse">
+              <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="../registro.html">Registrarse</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../login.html">Iniciar Sesion</a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </nav>
