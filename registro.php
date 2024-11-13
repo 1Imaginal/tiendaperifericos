@@ -1,3 +1,15 @@
+<?php
+    include("conexion.php");
+
+    $usuario = mysqli_real_escape_string($con, $_POST['username']);
+    $password = mysqli_real_escape_string($con, $_POST['pswd']);
+
+    //Query
+    $query="INSERT INTO usuarios (nombre, password_hash)
+    VALUES ('$usuario', '$password');";
+
+  ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +19,17 @@
     <title>Tienda</title>
 </head>
 <body>
+    <?php
+        if (mysqli_query($con, $query)) {
+            echo "<div class=\"alert alert-success\">
+                <strong>Success!</strong> Registro exitoso.
+                </div>";
+        } else {
+            echo "<div class=\"alert alert-warning\">
+            <strong>Success!</strong> Registro fallido.
+            </div>";
+        }
+    ?>
   <nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #99846e;">
     <div class="container-fluid">
       <a class="navbar-brand" href="index.html">Tienda perifericos</a>
@@ -42,23 +65,6 @@
       </div>
     </div>
   </nav>
-    <div class="container">
-      <form action="registro.php" method="post">
-        <div class="mb-3 mt-3">
-          <label for="username" class="form-label">Nombre de usuario</label>
-          <input type="text" class="form-control" id="username" placeholder="Ingresa tu nombre de usuario" name="username">
-        </div>
-        <div class="mb-3">
-          <label for="pwd" class="form-label">Contraseña</label>
-          <input type="password" class="form-control" id="pwd" placeholder="Ingresa tu contraseña" name="pswd">
-        </div>
-        <div class="mb-3">
-          <label for="pwdconf" class="form-label">Confirmar contraseña</label>
-          <input type="password" class="form-control" id="pwdconf" placeholder="Ingresa nuevamente tu contraseña" name="pswdconf">
-        </div>
-        <button type="submit" class="btn btn-primary">Registrarse</button>
-      </form>
-    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
