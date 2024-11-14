@@ -18,4 +18,6 @@
         echo "<h1> Inicio de sesion fallido </h1>";
     }
 
+    header("Location: index.php");
+    exit();
 ?>
