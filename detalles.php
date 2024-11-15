@@ -6,14 +6,35 @@
 
         $id = $_GET['id'];
         $idCat = $_GET['idCat'];
-        $query = "SELECT * FROM productos WHERE idCat = $idCat AND id = $id";
-  
+        $idObj = $_GET['idObj'];
+        
+        $query_producto  = "SELECT p.modelo, p.precio, p.img, p.unidades, f.nombre AS fabricante FROM productos p
+        INNER JOIN fabricante f ON f.id=p.idFab  WHERE idCat = $idCat AND p.id = $id";
+
+        $result_producto = mysqli_query($con,$query_producto);
+        $row_producto = mysqli_fetch_array($result_producto);
+
+        switch($idCat){
+          case 1:
+            $query_caracteristicas = "SELECT forma, sensor, peso FROM mouse WHERE id = $idObj";
+            break;
+          case 2:
+            $query_caracteristicas = "SELECT tamano, switches, rgb FROM teclado WHERE id = $idObj";
+            break;
+          case 3:
+            $query_caracteristicas = "SELECT  material, tamano, color FROM mousepad WHERE id = $idObj";
+            break;
+        }
+
+        $result_caracteristicas = mysqli_query($con,$query_caracteristicas);
+        $row_caracteristicas = mysqli_fetch_assoc($result_caracteristicas);
+
         if(mysqli_connect_errno()){ 
           echo "<div class=\"alert alert-success\"><strong>Error</strong>" . mysqli_connect_error() . "</div>";
         }
   
-        $result = mysqli_query($con,$query);
-        $row = mysqli_fetch_array($result);
+
+
         mysqli_close($con);
   
     ?>
@@ -56,17 +77,44 @@
   </nav>
       <div class="container my-4">
         <div class="row">
-            <div class="col-8">
+            <div class="col-7">
                 <div class="col-4">
-                    <img src="rsc/productos/<?php echo$row['img'];?>"  alt="" srcset="">
+                    <img src="rsc/productos/<?php echo$row_producto['img'];?>"  alt="" srcset="">
                 </div>
             </div>
-            <div class="col-4" style="text-align:center;">
-                <p><?php echo $row['idFab']?></p>
-                <h2><?php echo $row['modelo']?></h2>
-                <h4><?php echo $row['precio'] . "$"?></h4>
+            <div class="col-5 my-5" style="text-align:justify;">
+                <h5 class="my-3"><?php echo $row_producto['fabricante']?></h5>
+                <h2 class="my-3"><?php echo $row_producto['modelo']?></h2>
+                <h4 class="my-3"><?php echo $row_producto['precio']-0.01 . "$"?></h4>
 
-                <p>Caracteristicas</p>
+                <h3>Caracteristicas</h3>
+                <?php
+                   switch($idCat){
+                    case 1:
+                      echo "<p class=\"my-3\">Forma : " . $row_caracteristicas["forma"] . "</p>";
+                      echo "<p class=\"my-3\">Sensor : " . $row_caracteristicas["sensor"] . "</p>"; 
+                      echo "<p class=\"my-3\">Peso : " . $row_caracteristicas["peso"] . "</p>";
+                      break;
+                    case 2:
+                      echo "<p class=\"my-3\">Tamaño : " . $row_caracteristicas["tamano"] . "</p>";
+                      echo "<p class=\"my-3\">Switches : " . $row_caracteristicas["switches"] . "</p>"; 
+                      echo "<p class=\"my-3\">RGB : " . $row_caracteristicas["rgb"] . "</p>";
+                      break;
+                    case 3:
+                      echo "<p class=\"my-3\">Material : " . $row_caracteristicas["material"] . "</p>";
+                      echo "<p class=\"my-3\">Tamaño : " . $row_caracteristicas["tamano"] . "</p>"; 
+                      echo "<p class=\"my-3\">Color : " . $row_caracteristicas["color"] . "</p>";
+                      break;
+                   }
+                   
+                   echo "<p class=\"my-4\">" . $row_producto["unidades"] . " Unidades disponibles</p>";
+                   echo "<form action=\"agregarproducto.php\" method=\"post\">";
+                   echo "<input type=\"hidden\" name=\"idProducto\" value=\"" . $id . "\">";
+                   echo "<input type=\"hidden\" name=\"idCat\" value=\"" . $idCat . "\">";
+                   echo "<input type=\"hidden\" name=\"precio\" value=\"" . $row_producto['precio'] . "\">";
+                   echo "<button type=\"submit\" class=\"btn btn-primary\">Agregar al carrito</button>";
+                   echo "</form>";
+                ?>
             </div>
         </div>
       </div>

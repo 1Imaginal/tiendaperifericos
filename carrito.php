@@ -1,8 +1,12 @@
 <?php
       include("cambiarnav.php");
 
-      $id = $_SESSION["id"];
-      $query = "SELECT p.modelo AS producto, p.img AS img, p.id AS idProducto, c.unidades, c.precio FROM carrito c 
+      if($session){
+        $id = $_SESSION["id"];
+      } else {
+        $id = 999999;
+      }
+      $query = "SELECT p.modelo AS producto, p.img, p.id, p.idCat, p.idObj, c.unidades, c.precio FROM carrito c 
       INNER JOIN productos p ON c.idProducto=p.id where idUsuario = $id";
 
       if(mysqli_connect_errno()){ 
@@ -60,20 +64,26 @@
         echo "<div class=\"container\">";
         echo "<div class=\"row\">";
         echo "<div class=\"col-3 my-2\">";
-        echo "<img class=\"img-thumbnail float-start\" src=\"rsc/productos/" . $row['img'] . "\" alt=\"" . $row['producto'] . "\"
-        style=\"width:250px; height:200px;\">";
-        echo "</div><div class=\"col-3 my-2\"> ";
+        echo "<a href=\"detalles.php?id=" . $row['id'] . "&idCat=" . $row['idCat'] . "&idObj=" . $row['idObj'] . 
+                    " \"style=\"text-decoration: none;  color: #735334;\">";
+        echo "<img class=\"img-thumbnail float-start\" src=\"rsc/productos/" . $row['img'] . "\" alt=\"" . $row['producto'] . 
+                      "\"style=\"width:250px; height:200px;\">";
+        echo "</a>";
+        echo "</div><div class=\"col-3 my-4\"> ";
+        echo "<a href=\"detalles.php?id=" . $row['id'] . "&idCat=" . $row['idCat'] . "&idObj=" . $row['idObj'] . 
+        " \"style=\"text-decoration: none;  color: #735334;\">";
         echo "<h2>" . $row['producto'] . "</h2>";
+        echo "</a>";
         echo "<h4>" . $row['unidades'] . " Unidades</h4>";
         echo "<h4>" . $row['precio']-0.01 . "$</h4>";
         echo "</div> <div class=\"col-1 \"></div> <div class=\"col-2\">";
         echo "<form action=\"eliminarproducto.php\" method=\"post\">";
         echo "<button type=\"submit\" class=\"btn btn-primary btn-lg my-5\">Eliminar</button>";
-        echo "<input type=\"hidden\" name=\"idProducto\" value=\"" . $row['idProducto'] . "\">";
+        echo "<input type=\"hidden\" name=\"idProducto\" value=\"" . $row['id'] . "\">";
         echo "</form>";
         echo "</div></div></div>";
       }
-      echo "<div class\"container\"><h2>Total:" .$total . "$</h2></div>";
+      echo "<div class\"container\"><h2 class=\"mx-5\">Total:" .$total . "$</h2></div>";
       ?>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   </body>

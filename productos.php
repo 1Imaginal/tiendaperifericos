@@ -5,7 +5,7 @@
       include("cambiarnav.php");
 
       $idCat = $_GET['idCat'];
-      $query = "SELECT p.id, p.modelo, p.idCat, f.nombre AS fabricante, p.precio, p.img FROM productos p INNER JOIN fabricante f ON f.id=p.idFab WHERE
+      $query = "SELECT p.id, p.modelo, p.idCat, p.idObj, f.nombre AS fabricante, p.precio, p.img FROM productos p INNER JOIN fabricante f ON f.id=p.idFab WHERE
       idCat = $idCat";
 
       if(mysqli_connect_errno()){ 
@@ -58,12 +58,13 @@
                 $contador = 0;
                 while($row = mysqli_fetch_array($result)){
                     echo "<div class=\"col-4\">";
-                    echo "<div class=\"card\" style=\"width:400px\">";
-                    echo "<a href=\"detalles.php?id=" . $row['id'] . "&idCat=" . $row['idCat']. "\">";
+                    echo "<div class=\"card\" style=\"width:400px;  color: #735334;\">";
+                    echo "<a href=\"detalles.php?id=" . $row['id'] . "&idCat=" . $row['idCat'] . "&idObj=" . $row['idObj'] . 
+                    " \"style=\"text-decoration: none;  color: #735334;\">";
                     echo "<img class=\"card-img-top\" src=\"rsc/productos/" . $row['img'] . "\" alt=\"" . $row['modelo'] . "\">";
+                    echo "<h4 class=\"card-title mx-3\">" . $row['modelo'] . "</h4>";
                     echo "</a>";
                     echo "<div class=\"card-body\">";
-                    echo "<h4 class=\"card-title\">" . $row['modelo'] . "</h4>";
                     echo "<p class=\"card-text\">" . $row['fabricante'] . "</p>";
                     echo "<h5 class=\"card-text\">" . $row['precio']-0.01 . "$</h5>";
                     
