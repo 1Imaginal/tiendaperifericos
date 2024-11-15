@@ -2,7 +2,7 @@
       include("cambiarnav.php");
 
       $id = $_SESSION["id"];
-      $query = "SELECT p.modelo AS producto, c.unidades, c.precio FROM carrito c 
+      $query = "SELECT p.modelo AS producto, p.img AS img, p.id AS idProducto, c.unidades, c.precio FROM carrito c 
       INNER JOIN productos p ON c.idProducto=p.id where idUsuario = $id";
 
       if(mysqli_connect_errno()){ 
@@ -53,28 +53,28 @@
       </div>
     </div>
   </nav>
-  <div class="container">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Producto</th>
-          <th>Unidades</th>
-          <th>Precio</th>
-        </tr>
-      </thead>
-      <tbody>
-        <?php
-          while($row = mysqli_fetch_array($result)){
-            echo "<tr>";
-            echo "<td>" . $row['producto'] . "</td>";
-            echo "<td>" . $row['unidades'] . "</td>";
-            echo "<td>" . $row['precio']-0.01 . "$</td>";
-            echo "</tr>";
-          }
-          ?>  
-      </tbody>
-    </table>
-  </div>
+    <?php
+      $total=0;
+      while($row = mysqli_fetch_array($result)){
+        $total+=$row['precio']-0.01;
+        echo "<div class=\"container\">";
+        echo "<div class=\"row\">";
+        echo "<div class=\"col-3 my-2\">";
+        echo "<img class=\"img-thumbnail float-start\" src=\"rsc/productos/" . $row['img'] . "\" alt=\"" . $row['producto'] . "\"
+        style=\"width:250px; height:200px;\">";
+        echo "</div><div class=\"col-3 my-2\"> ";
+        echo "<h2>" . $row['producto'] . "</h2>";
+        echo "<h4>" . $row['unidades'] . " Unidades</h4>";
+        echo "<h4>" . $row['precio']-0.01 . "$</h4>";
+        echo "</div> <div class=\"col-1 \"></div> <div class=\"col-2\">";
+        echo "<form action=\"eliminarproducto.php\" method=\"post\">";
+        echo "<button type=\"submit\" class=\"btn btn-primary btn-lg my-5\">Eliminar</button>";
+        echo "<input type=\"hidden\" name=\"idProducto\" value=\"" . $row['idProducto'] . "\">";
+        echo "</form>";
+        echo "</div></div></div>";
+      }
+      echo "<div class\"container\"><h2>Total:" .$total . "$</h2></div>";
+      ?>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   </body>
 </html>
