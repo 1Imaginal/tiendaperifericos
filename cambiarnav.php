@@ -1,19 +1,5 @@
 <?php
   include("conexion.php");
-  session_start();
-  $session = false;
-  if(isset($_SESSION["id"])){
-    $session=true;
-    $id = $_SESSION["id"];
-    $query = "select nombre from usuarios where id = $id";
-
-    $result = mysqli_query($con,$query);
-    $row = mysqli_fetch_array($result);
-    $nombre = $row["nombre"];
-  } else {
-    $nombre = "guest";
-  }
-
   function cambiarnav($session, $nombre){
     if(!$session){
       echo "<ul class=\"navbar-nav me-auto\">

@@ -18,6 +18,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
     <title>Tienda</title>
 </head>
 <body>
@@ -64,8 +65,14 @@
                     echo "<div class=\"card-body\">";
                     echo "<h4 class=\"card-title\">" . $row['modelo'] . "</h4>";
                     echo "<p class=\"card-text\">" . $row['fabricante'] . "</p>";
-                    echo "<h5 class=\"card-text\">" . $row['precio'] . "$</h5>";
-                    echo "<a href=\"#\" class=\"btn btn-primary\">Agregar al carrito</a>";
+                    echo "<h5 class=\"card-text\">" . $row['precio']-0.01 . "$</h5>";
+                    
+                    echo "<form action=\"agregarproducto.php\" method=\"post\">";
+                    echo "<input type=\"hidden\" name=\"idProducto\" value=\"" . $row['id'] . "\">";
+                    echo "<input type=\"hidden\" name=\"idCat\" value=\"" . $row['idCat'] . "\">";
+                    echo "<input type=\"hidden\" name=\"precio\" value=\"" . $row['precio'] . "\">";
+                    echo "<button type=\"submit\" class=\"btn btn-primary\">Agregar al carrito</button>";
+                    echo "</form>";
                     echo "</div></div></div>";
                     
                     $contador++;
