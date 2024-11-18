@@ -118,6 +118,12 @@
             </div>
         </div>
       </div>
+      <div class="container">
+        <h3>Descripción</h3>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae nam non cum commodi necessitatibus consectetur. Autem voluptate earum suscipit iure expedita dolores, architecto, libero aliquam, porro ullam ipsa incidunt magni!</p>
+        <p>Ratione voluptas tempore beatae est nulla dolores quibusdam velit quia inventore dolorum perferendis asperiores, et voluptate molestias, nihil error aliquid iure, eligendi ipsam recusandae. Ipsam ducimus ipsa sunt optio provident.</p>
+        <p>Obcaecati optio iure iste minima incidunt accusantium eius quae vitae deleniti fugit reiciendis ullam voluptatem mollitia modi suscipit, omnis nam rem maiores hic nesciunt? Earum, porro. Quasi eos eius at!</p>
+      </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

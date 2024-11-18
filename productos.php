@@ -52,38 +52,32 @@
           </div>
         </div>
       </nav>
-      <div class="container my-4">
-        <div class="row my-4">
-            <?php
-                $contador = 0;
-                while($row = mysqli_fetch_array($result)){
-                    echo "<div class=\"col-4\">";
-                    echo "<div class=\"card\" style=\"width:400px;  color: #735334;\">";
-                    echo "<a href=\"detalles.php?id=" . $row['id'] . "&idCat=" . $row['idCat'] . "&idObj=" . $row['idObj'] . 
-                    " \"style=\"text-decoration: none;  color: #735334;\">";
-                    echo "<img class=\"card-img-top\" src=\"rsc/productos/" . $row['img'] . "\" alt=\"" . $row['modelo'] . "\">";
-                    echo "<h4 class=\"card-title mx-3\">" . $row['modelo'] . "</h4>";
-                    echo "</a>";
-                    echo "<div class=\"card-body\">";
-                    echo "<p class=\"card-text\">" . $row['fabricante'] . "</p>";
-                    echo "<h5 class=\"card-text\">" . $row['precio']-0.01 . "$</h5>";
-                    
-                    echo "<form action=\"agregarproducto.php\" method=\"post\">";
-                    echo "<input type=\"hidden\" name=\"idProducto\" value=\"" . $row['id'] . "\">";
-                    echo "<input type=\"hidden\" name=\"idCat\" value=\"" . $row['idCat'] . "\">";
-                    echo "<input type=\"hidden\" name=\"precio\" value=\"" . $row['precio'] . "\">";
-                    echo "<button type=\"submit\" class=\"btn btn-primary\">Agregar al carrito</button>";
-                    echo "</form>";
-                    echo "</div></div></div>";
-                    
-                    $contador++;
-    
-                    if ($contador%3==0) {
-                        echo "</div>";
-                        echo "<div class=\"row my-4\">";
-                    }
-                }
-            ?>
+      <div class="container-flex">
+        <div class="container">
+          <div class="row my-4">
+              <?php
+                  while($row = mysqli_fetch_array($result)){
+                      echo "<div class=\"col my-3\">";
+                      echo "<div class=\"card\" style=\"width:400px;  color: #735334;\">";
+                      echo "<a href=\"detalles.php?id=" . $row['id'] . "&idCat=" . $row['idCat'] . "&idObj=" . $row['idObj'] . 
+                      " \"style=\"text-decoration: none;  color: #735334;\">";
+                      echo "<img class=\"card-img-top\" src=\"rsc/productos/" . $row['img'] . "\" alt=\"" . $row['modelo'] . "\">";
+                      echo "<h4 class=\"card-title mx-3\">" . $row['modelo'] . "</h4>";
+                      echo "</a>";
+                      echo "<div class=\"card-body\">";
+                      echo "<p class=\"card-text\">" . $row['fabricante'] . "</p>";
+                      echo "<h5 class=\"card-text\">" . $row['precio']-0.01 . "$</h5>";
+                      
+                      echo "<form action=\"agregarproducto.php\" method=\"post\">";
+                      echo "<input type=\"hidden\" name=\"idProducto\" value=\"" . $row['id'] . "\">";
+                      echo "<input type=\"hidden\" name=\"idCat\" value=\"" . $row['idCat'] . "\">";
+                      echo "<input type=\"hidden\" name=\"precio\" value=\"" . $row['precio'] . "\">";
+                      echo "<button type=\"submit\" class=\"btn btn-primary\">Agregar al carrito</button>";
+                      echo "</form>";
+                      echo "</div></div></div>";
+                  }
+              ?>
+          </div>
         </div>
       </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

@@ -26,7 +26,7 @@
                 </div>";
         } else {
             echo "<div class=\"alert alert-warning\">
-            <strong>Success!</strong> Registro fallido.
+            <strong>Error</strong> Registro fallido.
             </div>";
         }
     ?>

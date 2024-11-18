@@ -1,7 +1,21 @@
 <?php
-  include("cambiarnav.php");
-?>
+      include("cambiarnav.php");
 
+      if(!$session){
+        header("Location: login.html");
+        exit();
+      }
+      $id = $_SESSION["id"];
+      $query = "SELECT p.modelo AS producto, p.img, p.id, p.idCat, p.idObj, c.unidades, c.precio FROM carrito c 
+      INNER JOIN productos p ON c.idProducto=p.id where idUsuario = $id";
+
+      if(mysqli_connect_errno()){ 
+        echo "<div class=\"alert alert-success\"><strong>Error</strong>" . mysqli_connect_error() . "</div>";
+      }
+
+      $result = mysqli_query($con,$query);
+      mysqli_close($con);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,6 +56,8 @@
       </div>
     </div>
   </nav>
+  <div class="container-flex m-3">
+    <h1>Favoritos</h1>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

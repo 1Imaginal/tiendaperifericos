@@ -3,14 +3,14 @@
 
     $idProducto = mysqli_real_escape_string($con, $_POST['idProducto']);
 
-    if($session){
-        $id = $_SESSION["id"];
-
-        $query = "DELETE FROM carrito where idUsuario = $id AND idProducto = $idProducto";
-
-    } else {
-        $query = "DELETE FROM carrito where idUsuario = $id";
+    if(!$session){
+        header("Location: login.html");
+        exit();
     }
+    
+    $id = $_SESSION["id"];
+
+    $query = "DELETE FROM carrito where idUsuario = $id AND idProducto = $idProducto";
 
     // Ejecutar la consulta y verificar el resultado
     if (mysqli_query($con, $query)) {

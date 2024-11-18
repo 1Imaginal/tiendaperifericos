@@ -1,11 +1,11 @@
 <?php
       include("cambiarnav.php");
 
-      if($session){
-        $id = $_SESSION["id"];
-      } else {
-        $id = 999999;
+      if(!$session){
+        header("Location: login.html");
+        exit();
       }
+      $id = $_SESSION["id"];
       $query = "SELECT p.modelo AS producto, p.img, p.id, p.idCat, p.idObj, c.unidades, c.precio FROM carrito c 
       INNER JOIN productos p ON c.idProducto=p.id where idUsuario = $id";
 
@@ -83,8 +83,19 @@
         echo "</form>";
         echo "</div></div></div>";
       }
-      echo "<div class\"container\"><h2 class=\"mx-5\">Total:" .$total . "$</h2></div>";
+      echo "<div class=\"container my-4\">
+              <div class=\"row\">
+                <div class=\"col-7\">
+                  <h2 class=\"\">Total: " .$total . "$</h2>
+                </div>";
       ?>
+          <div class="col">
+            <form action="realizarpedido.php" method="post">";
+              <button type="submit" class="btn btn-outline-success btn-lg">Realizar pedido</button>
+            </form>
+          </div>
+        </div>
+      </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   </body>
 </html>

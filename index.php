@@ -68,7 +68,7 @@
              </div>
         </div>
     </div>
-    <div class="container-fluid my-5">
+    <div class="container my-5">
         <h2>¿Por qué nosotros?</h1>
         <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Natus esse inventore eum doloribus minima molestiae aliquid blanditiis culpa fugiat ullam unde quas, velit sint quos eligendi, cumque ipsum nisi? Quia!</p>
         <p>Amet, vel fuga voluptatum unde provident distinctio velit fugit culpa qui sint iusto minus quos laboriosam praesentium corporis facilis molestias voluptates! Pariatur non dolorum tenetur vitae sint fuga dolor facilis.</p>
