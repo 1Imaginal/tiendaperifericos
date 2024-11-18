@@ -60,22 +60,31 @@
     <?php
       $total=0;
       while($row = mysqli_fetch_array($result)){
-        $total+=$row['precio']-0.01;
+        $total += ($row['precio'] - 0.01)*$row['unidades'];
         echo "<div class=\"container\">";
         echo "<div class=\"row\">";
         echo "<div class=\"col-3 my-2\">";
         echo "<a href=\"detalles.php?id=" . $row['id'] . "&idCat=" . $row['idCat'] . "&idObj=" . $row['idObj'] . 
-                    " \"style=\"text-decoration: none;  color: #735334;\">";
+                " \"style=\"text-decoration: none; color: #735334;\">";
         echo "<img class=\"img-thumbnail float-start\" src=\"rsc/productos/" . $row['img'] . "\" alt=\"" . $row['producto'] . 
-                      "\"style=\"width:250px; height:200px;\">";
+                    "\"style=\"width:250px; height:200px;\">";
         echo "</a>";
         echo "</div><div class=\"col-3 my-4\"> ";
         echo "<a href=\"detalles.php?id=" . $row['id'] . "&idCat=" . $row['idCat'] . "&idObj=" . $row['idObj'] . 
-        " \"style=\"text-decoration: none;  color: #735334;\">";
+        " \"style=\"text-decoration: none; color: #735334;\">";
         echo "<h2>" . $row['producto'] . "</h2>";
         echo "</a>";
-        echo "<h4>" . $row['unidades'] . " Unidades</h4>";
-        echo "<h4>" . $row['precio']-0.01 . "$</h4>";
+
+        echo "<form action=\"actualizarUnidades.php\" method=\"POST\">";
+        echo "<label for=\"unidades-" . $row['id'] . "\" class=\"form-label\">Unidades:</label>";
+        echo "<div class=\"d-flex align-items-center\">";
+        echo "<button type=\"submit\" name=\"accion\" value=\"decrementar\" class=\"btn btn-danger\">-</button>";
+        echo "<input type=\"number\" class=\"form-control mx-2\" id=\"unidades-" . $row['id'] . "\" name=\"unidades[" . $row['id'] . "]\" value=\"" . $row['unidades'] . "\" min=\"1\" max=\"10\" readonly>";
+        echo "<button type=\"submit\" name=\"accion\" value=\"incrementar\" class=\"btn btn-success\">+</button>";
+        echo "</div>";
+        echo "</form>";
+
+        echo "<h4>" . $row['precio'] - 0.01 . "$</h4>";
         echo "</div> <div class=\"col-1 \"></div> <div class=\"col-2\">";
         echo "<form action=\"eliminarproducto.php\" method=\"post\">";
         echo "<button type=\"submit\" class=\"btn btn-primary btn-lg my-5\">Eliminar</button>";
@@ -83,19 +92,21 @@
         echo "</form>";
         echo "</div></div></div>";
       }
-      echo "<div class=\"container my-4\">
-              <div class=\"row\">
-                <div class=\"col-7\">
-                  <h2 class=\"\">Total: " .$total . "$</h2>
-                </div>";
-      ?>
-          <div class="col">
-            <form action="realizarpedido.php" method="post">";
-              <button type="submit" class="btn btn-outline-success btn-lg">Realizar pedido</button>
-            </form>
-          </div>
-        </div>
+    ?>
+  
+  <div class="container my-4">
+    <div class="row">
+      <div class="col-7">
+        <h2>Total: <?php echo $total . "$"; ?></h2>
       </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-  </body>
+      <div class="col">
+        <form action="realizarpedido.php" method="post">
+          <button type="submit" class="btn btn-outline-success btn-lg">Realizar pedido</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
 </html>

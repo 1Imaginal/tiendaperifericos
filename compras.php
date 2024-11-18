@@ -7,7 +7,7 @@
       }
       $id = $_SESSION["id"];
       $query = "SELECT p.modelo AS producto, c.unidades, c.precio, c.fecha FROM compras c 
-      INNER JOIN productos p ON c.idProducto=p.id where idUsuario = $id";
+      INNER JOIN productos p ON c.idProducto=p.id WHERE idUsuario = $id ORDER BY c.fecha DESC";
 
       if(mysqli_connect_errno()){ 
         echo "<div class=\"alert alert-success\"><strong>Error</strong>" . mysqli_connect_error() . "</div>";

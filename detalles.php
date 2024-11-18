@@ -88,26 +88,27 @@
                 <h4 class="my-3"><?php echo $row_producto['precio']-0.01 . "$"?></h4>
 
                 <h3>Caracteristicas</h3>
+                <ul>
                 <?php
                    switch($idCat){
                     case 1:
-                      echo "<p class=\"my-3\">Forma : " . $row_caracteristicas["forma"] . "</p>";
-                      echo "<p class=\"my-3\">Sensor : " . $row_caracteristicas["sensor"] . "</p>"; 
-                      echo "<p class=\"my-3\">Peso : " . $row_caracteristicas["peso"] . "</p>";
+                      echo "<li class=\"my-3\">Forma : " . $row_caracteristicas["forma"] . "</li>";
+                      echo "<li class=\"my-3\">Sensor : " . $row_caracteristicas["sensor"] . "</li>"; 
+                      echo "<li class=\"my-3\">Peso : " . $row_caracteristicas["peso"] . "</li>";
                       break;
                     case 2:
-                      echo "<p class=\"my-3\">Tamaño : " . $row_caracteristicas["tamano"] . "</p>";
-                      echo "<p class=\"my-3\">Switches : " . $row_caracteristicas["switches"] . "</p>"; 
-                      echo "<p class=\"my-3\">RGB : " . $row_caracteristicas["rgb"] . "</p>";
+                      echo "<li class=\"my-3\">Tamaño : " . $row_caracteristicas["tamano"] . "</li>";
+                      echo "<li class=\"my-3\">Switches : " . $row_caracteristicas["switches"] . "</li>"; 
+                      echo "<li class=\"my-3\">RGB : " . $row_caracteristicas["rgb"] . "</li>";
                       break;
                     case 3:
-                      echo "<p class=\"my-3\">Material : " . $row_caracteristicas["material"] . "</p>";
-                      echo "<p class=\"my-3\">Tamaño : " . $row_caracteristicas["tamano"] . "</p>"; 
-                      echo "<p class=\"my-3\">Color : " . $row_caracteristicas["color"] . "</p>";
+                      echo "<li class=\"my-3\">Material : " . $row_caracteristicas["material"] . "</li>";
+                      echo "<li class=\"my-3\">Tamaño : " . $row_caracteristicas["tamano"] . "</li>"; 
+                      echo "<li class=\"my-3\">Color : " . $row_caracteristicas["color"] . "</li>";
                       break;
                    }
                    
-                   echo "<p class=\"my-4\">" . $row_producto["unidades"] . " Unidades disponibles</p>";
+                   echo "<li class=\"my-4\">" . $row_producto["unidades"] . " Unidades disponibles</li>";
                    echo "<form action=\"agregarproducto.php\" method=\"post\">";
                    echo "<input type=\"hidden\" name=\"idProducto\" value=\"" . $id . "\">";
                    echo "<input type=\"hidden\" name=\"idCat\" value=\"" . $idCat . "\">";
@@ -115,6 +116,8 @@
                    echo "<button type=\"submit\" class=\"btn btn-primary\">Agregar al carrito</button>";
                    echo "</form>";
                 ?>
+                </ul>
+
             </div>
         </div>
       </div>

@@ -5,7 +5,7 @@
       include("cambiarnav.php");
 
       $idCat = $_GET['idCat'];
-      $query = "SELECT p.id, p.modelo, p.idCat, p.idObj, f.nombre AS fabricante, p.precio, p.img FROM productos p INNER JOIN fabricante f ON f.id=p.idFab WHERE
+      $query = "SELECT p.id, p.modelo, p.idCat, p.unidades, p.idObj, f.nombre AS fabricante, p.precio, p.img FROM productos p INNER JOIN fabricante f ON f.id=p.idFab WHERE
       idCat = $idCat";
 
       if(mysqli_connect_errno()){ 
@@ -66,15 +66,19 @@
                       echo "</a>";
                       echo "<div class=\"card-body\">";
                       echo "<p class=\"card-text\">" . $row['fabricante'] . "</p>";
+                      echo "<div class=\"row\">";
+                      echo "<div class=\"col-6\">";
                       echo "<h5 class=\"card-text\">" . $row['precio']-0.01 . "$</h5>";
+                      echo "</div>";
                       
+                      echo "<div class=\"col-6\">";
                       echo "<form action=\"agregarproducto.php\" method=\"post\">";
                       echo "<input type=\"hidden\" name=\"idProducto\" value=\"" . $row['id'] . "\">";
                       echo "<input type=\"hidden\" name=\"idCat\" value=\"" . $row['idCat'] . "\">";
                       echo "<input type=\"hidden\" name=\"precio\" value=\"" . $row['precio'] . "\">";
                       echo "<button type=\"submit\" class=\"btn btn-primary\">Agregar al carrito</button>";
                       echo "</form>";
-                      echo "</div></div></div>";
+                      echo "</div></div></div></div></div>";
                   }
               ?>
           </div>

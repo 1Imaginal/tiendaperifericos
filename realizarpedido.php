@@ -6,6 +6,8 @@
         exit();
     }
 
+    
+
     $id = $_SESSION["id"];
     $query = "SELECT idProducto, unidades, precio FROM carrito where idUsuario = $id";
 
