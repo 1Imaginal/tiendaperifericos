@@ -18,8 +18,11 @@
                 <ul class=\"dropdown-menu dropdown-menu-end\">
                   <li><a class=\"dropdown-item\" href=\"carrito.php\">Carrito</a></li>
                   <li><a class=\"dropdown-item\" href=\"favoritos.php\">Favoritos</a></li>
-                  <li><a class=\"dropdown-item\" href=\"compras.php\">Compras</a></li>
-                    <li><a class=\"dropdown-item\" href=\"logout.php\">Cerrar sesion</a></li>
+                  <li><a class=\"dropdown-item\" href=\"compras.php\">Compras</a></li>";
+      if($_SESSION["admin"]){
+        echo "<li><a class=\"dropdown-item\" href=\"paneldecontrol.php\">Panel de control</a></li>";
+      }
+      echo "<li><a class=\"dropdown-item\" href=\"logout.php\">Cerrar sesion</a></li>
                 </ul>
               </li>
             </ul>";

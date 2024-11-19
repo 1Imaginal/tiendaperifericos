@@ -109,12 +109,31 @@
                    }
                    
                    echo "<li class=\"my-4\">" . $row_producto["unidades"] . " Unidades disponibles</li>";
+
                    echo "<form action=\"agregarproducto.php\" method=\"post\">";
                    echo "<input type=\"hidden\" name=\"idProducto\" value=\"" . $id . "\">";
                    echo "<input type=\"hidden\" name=\"idCat\" value=\"" . $idCat . "\">";
                    echo "<input type=\"hidden\" name=\"precio\" value=\"" . $row_producto['precio'] . "\">";
                    echo "<button type=\"submit\" class=\"btn btn-primary\">Agregar al carrito</button>";
                    echo "</form>";
+
+                   if(isset($_SESSION["admin"])){
+                    if($_SESSION["admin"]){
+                      echo "<form action=\"actualizarInventario.php\" method=\"POST\">";
+                      echo "
+                      <div class=\"row my-4\">
+                        <div class=\"col\">
+                          <input type=\"number\" class=\"form-control mx-2\" id=\"unidades\" name=\"unidades\" placeholder=" . $row_producto["unidades"] . ">
+                        </div>
+                        <div class=\"col\">
+                          <button type=\"submit\"class=\"btn btn-success\">Actualizar unidades</button>
+                        </div>
+                      </div>";
+                      echo "";
+                      echo "</div>";
+                      echo "</form>";
+                    }
+                  } 
                 ?>
                 </ul>
 
