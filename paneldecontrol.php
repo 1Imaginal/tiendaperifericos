@@ -73,26 +73,27 @@
   </nav>
   <div class="container-flex m-3">
     <h1>Panel de control</h1>
-    <form action="funcionesAdministrador.php">
-    <input type="hidden" name="accion" value="actualizarProducto">
-    <div class="mb-3 mt-3">
-      <select class="form-select" aria-label="Producto a modificar" name="idProducto">
-      <option selected disabled>Producto a modificar</option>
-        <?php
-          while($row = mysqli_fetch_array($result)){
-            echo "<option value=" . $row["id"] . ">" . $row["modelo"] . "</option>";
-          }
-        ?>
-      </select>
-      <div class="row my-4">
-        <div class="col">
-          <input type="number" class="form-control mx-2" id="unidades" name="unidades">
-        </div>
-        <div class="col">
-          <button type="submit" class="btn btn-success">Actualizar unidades</button> <button type="submit" class="btn btn-danger mx-4">Eliminar producto</button>
-        </div>
-      </div>
-    </form>
+    <form action="funcionesAdministrador.php" method="POST">
+      <input type="hidden" name="accion" value="actualizarProducto">
+      <div class="mb-3 mt-3">
+        <select class="form-select" aria-label="Producto a modificar" name="idProducto">
+        <option selected disabled>Producto a modificar</option>
+          <?php
+            while($row = mysqli_fetch_array($result)){
+              echo "<option value=" . $row["id"] . ">" . $row["modelo"] . "</option>";
+            }
+          ?>
+        </select>
+        <div class="row my-4">
+          <div class="col">
+            <input type="number" class="form-control mx-2" id="unidades" name="unidades">
+          </div>
+          <div class="col">
+            <button type="submit" name="accion" value="actualizarProducto" class="btn btn-success">Actualizar unidades</button> 
+            <button type="submit" name="accion" value="eliminarProducto" class="btn btn-danger mx-4">Eliminar producto</button>
+          </div>
+      </form>
+    </div>
     <div class="container-flex m-3">
     <h1>Insertar producto</h1>
     <form action="funcionesAdministrador.php" method="post" enctype="multipart/form-data">

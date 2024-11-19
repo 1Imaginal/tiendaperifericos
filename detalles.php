@@ -119,17 +119,18 @@
 
                    if(isset($_SESSION["admin"])){
                     if($_SESSION["admin"]){
-                      echo "<form action=\"actualizarInventario.php\" method=\"POST\">";
+                      echo "<form action=\"funcionesAdministrador.php\" method=\"post\">";
                       echo "
+                      <input type=\"hidden\" name=\"idProducto\" value=\"" . $id . "\">
                       <div class=\"row my-4\">
                         <div class=\"col\">
                           <input type=\"number\" class=\"form-control mx-2\" id=\"unidades\" name=\"unidades\" placeholder=" . $row_producto["unidades"] . ">
                         </div>
                         <div class=\"col\">
-                          <button type=\"submit\"class=\"btn btn-success\">Actualizar unidades</button>
+                          <button type=\"submit\"class=\"btn btn-success\" name=\"accion\" value=\"actualizarProducto\">Actualizar unidades</button>
                         </div>
+                        <button type=\"submit\"class=\"btn btn-danger my-5\" name=\"accion\" value=\"eliminarProducto\">Eliminar producto</button>
                       </div>";
-                      echo "";
                       echo "</div>";
                       echo "</form>";
                     }

@@ -12,13 +12,12 @@
         } 
         elseif ($accion == 'eliminarProducto') {
             eliminarProducto($con);
-        }elseif ($accion == 'eliminarUsuario'){
-            eliminarUsuario($con);
         }
+        
+        header("Location: paneldecontrol.php");
+        exit();
     }
 
-    header("Location: paneldecontrol.php");
-    exit();
 
     function insertarProducto($con){
 
@@ -94,28 +93,73 @@
             <strong>Error</strong> Registro fallido.
             </div>";
         }
+    
     }
 
     function actualizarProducto($con){
+
         $idProducto = mysqli_real_escape_string($con, $_POST['idProducto']);
         $unidades = mysqli_real_escape_string($con, $_POST['unidades']);
 
-        $query = "UPDATE productos SET unidades = $unidades WHERE idProducto = $idProducto";
+        $query = "UPDATE productos SET unidades = $unidades WHERE id = $idProducto";
 
         if (!mysqli_query($con, $query)) {
             echo "<div class=\"alert alert-warning\">
             <strong>Error</strong> Registro fallido.
-            </div>";
+            </div><script>alert(\"unidades actualizadas\"></script>";
         }
-        alert("Producto eliminado");
     }
 
     function eliminarProducto($con){
-        alert("Producto eliminado");
-    }
 
-    function eliminarUsuario($con){
-        alert("Usuario eliminado");
+        $idProducto = mysqli_real_escape_string($con, $_POST['idProducto']);
+
+        $query= "SELECT img, idObj, idCat FROM productos WHERE id = $idProducto";
+        $result= mysqli_query($con, $query);
+    
+        $row = mysqli_fetch_assoc($result);
+        $imagePath = "rsc/productos/" . $row['img']; // Ruta completa de la imagen
+
+        // Verifica si el archivo existe y elimínalo
+        if (file_exists($imagePath)) {
+            if (!unlink($imagePath)) {
+                echo "<div class=\"alert alert-warning\">
+                <strong>Error</strong> No se pudo eliminar la imagen del producto.
+                </div>";
+                return; // Evita continuar si no se elimina la imagen
+            }
+        }
+    
+        $idObjeto = $row['idObj'];
+        $idCategoria = $row['idCat'];
+
+        switch($idCategoria){
+            case 1:
+                $categoria = "mouse";
+                break;
+            case 2:
+                $categoria = "teclado";
+                break;
+            case 3:
+                $categoria = mousepad;
+                break;
+        }
+
+        $query_delete_categoria = "DELETE FROM $categoria WHERE id = $idObjeto";
+
+        $query_delete_producto = "DELETE FROM productos WHERE id = $idProducto";
+    
+        if (!mysqli_query($con, $query_delete_categoria)) {
+            echo "<div class=\"alert alert-warning\">
+            <strong>Error</strong> No se pudo eliminar el producto.
+            </div>";
+        }
+
+        if (!mysqli_query($con, $query_delete_producto)) {
+            echo "<div class=\"alert alert-warning\">
+            <strong>Error</strong> No se pudo eliminar el producto.
+            </div>";
+        }
     }
 
 ?>
