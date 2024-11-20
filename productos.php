@@ -18,7 +18,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="rsc/style.css">
     <title>Tienda</title>
 </head>
 <body>
@@ -57,7 +57,7 @@
           <div class="row my-4">
               <?php
                   while($row = mysqli_fetch_array($result)){
-                      echo "<div class=\"col my-3\">";
+                      echo "<div class=\"col-md my-3\">";
                       echo "<div class=\"card\" style=\"width:400px;  color: #735334;\">";
                       echo "<a href=\"detalles.php?id=" . $row['id'] . "&idCat=" . $row['idCat'] . "&idObj=" . $row['idObj'] . 
                       " \"style=\"text-decoration: none;  color: #735334;\">";
@@ -65,7 +65,14 @@
                       echo "<h4 class=\"card-title mx-3\">" . $row['modelo'] . "</h4>";
                       echo "</a>";
                       echo "<div class=\"card-body\">";
-                      echo "<p class=\"card-text\">" . $row['fabricante'] . "</p>";
+                      echo "<div class=\"row\">";
+                      echo "<div class=\"col\">";
+                      echo "<p class=\"card-text\">" . $row['fabricante'] . "</p></div>";
+                      echo "<div class=\"col my-2\">";
+                      echo "<span class=\"estado " . (($row["unidades"] > 0) ? "estado-disponible" : "estado-agotado") ."\"></span>";
+                      echo "<p class=\"card-text mx-1\">" . (($row["unidades"]>0)?" Disponible": " Agotado") . "</p></div>";
+                      echo "</div>";
+
                       echo "<div class=\"row\">";
                       echo "<div class=\"col-6\">";
                       echo "<h5 class=\"card-text\">" . $row['precio']-0.01 . "$</h5>";
