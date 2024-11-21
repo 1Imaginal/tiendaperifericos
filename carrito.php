@@ -87,7 +87,7 @@
         echo "<h4>" . $row['precio'] - 0.01 . "$</h4>";
         echo "</div> <div class=\"col-1 \"></div> <div class=\"col-2\">";
         echo "<form action=\"eliminarproducto.php\" method=\"post\">";
-        echo "<button type=\"submit\" class=\"btn btn-primary btn-lg my-5\">Eliminar</button>";
+        echo "<button type=\"submit\" class=\"btn btn-danger btn-lg my-5\">Eliminar</button>";
         echo "<input type=\"hidden\" name=\"idProducto\" value=\"" . $row['id'] . "\">";
         echo "</form>";
         echo "</div></div></div>";
