@@ -3,6 +3,7 @@
 
     $usuario = mysqli_real_escape_string($con, $_POST['username']);
     $password = mysqli_real_escape_string($con, $_POST['pswd']);
+    $password = password_hash($password, PASSWORD_DEFAULT);
 
     //Query
     $query="INSERT INTO usuarios (nombre, password_hash)
