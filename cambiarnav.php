@@ -1,5 +1,10 @@
 <?php
   include("conexion.php");
+    if(isset($_GET['mensaje'])){
+      $mensaje = $_GET['mensaje'];
+      $tipo = $_GET['tipo'];
+      echo "<div class='alert alert-$tipo alert-dismissible py-3 m-0'><button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\"></button><strong>$mensaje</strong></div>";
+    }
   function cambiarnav($session, $nombre){
     if(!$session){
       echo "<ul class=\"navbar-nav me-auto\">

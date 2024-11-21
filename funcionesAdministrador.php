@@ -6,15 +6,21 @@
         
         if ($accion == 'insertarProducto') {
             insertarProducto($con);
+            $mensaje = "Producto insertado";
+            $tipo = "success";
         } 
         elseif ($accion == 'actualizarProducto') {
             actualizarProducto($con);
+            $mensaje = "Producto actualizado";
+            $tipo = "warning";
         } 
         elseif ($accion == 'eliminarProducto') {
             eliminarProducto($con);
+            $mensaje = "Producto eliminado";
+            $tipo = "danger";
         }
         
-        header("Location: paneldecontrol.php");
+        header("Location: " . $_SERVER['HTTP_REFERER'] . "?mensaje=" . $mensaje . "&tipo=" . $tipo);
         exit();
     }
 

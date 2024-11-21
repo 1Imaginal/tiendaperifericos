@@ -97,16 +97,21 @@
   <div class="container my-4">
     <div class="row">
       <div class="col-7">
-        <h2>Total: <?php echo $total . "$"; ?></h2>
+        <h2>Total: <?php echo $total ."$"; ?></h2>
+        <input type="hidden" id="total" value="<?php echo $total ?>">
       </div>
       <div class="col">
         <form action="realizarpedido.php" method="post">
-          <button type="submit" class="btn btn-outline-success btn-lg">Realizar pedido</button>
+          <button type="submit" class="btn btn-outline-success btn-lg" id="realizarPedido" hidden>Realizar pedido</button>
         </form>
       </div>
     </div>
   </div>
-  
+<script>
+  if(document.getElementById('total').value > 0){
+    document.getElementById('realizarPedido').hidden = false;
+  }
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
