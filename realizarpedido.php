@@ -33,7 +33,10 @@
         $unidades_disponibles = $row_unidades["unidades"];
 
         if($unidades > $unidades_disponibles){
-            die("<div class=\"alert alert-danger\"><strong>No hay suficientes unidades</strong></div>");
+            $mensaje = "No hay suficientes unidades disponibles";
+            $tipo = "danger";
+            header("Location: carrito.php?mensaje=" . $mensaje . "&tipo=" . $tipo);
+            exit();
         }
 
         $query_insert = "INSERT INTO compras(idUsuario, idProducto, unidades, precio) VALUES ($id, $idProducto, $unidades, $subtotal)";
@@ -55,7 +58,8 @@
     }
 
     mysqli_close($con);
-
-    header("Location: compras.php");
+    $mensaje = "Pedido realizado";
+    $tipo = "success";
+    header("Location: compras.php?mensaje=" . $mensaje . "&tipo=" . $tipo);
     exit();
 ?>

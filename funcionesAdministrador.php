@@ -20,7 +20,7 @@
             $tipo = "danger";
         }
         
-        header("Location: " . $_SERVER['HTTP_REFERER'] . "?mensaje=" . $mensaje . "&tipo=" . $tipo);
+        header("Location: paneldecontrol.php?mensaje=" . $mensaje . "&tipo=" . $tipo);
         exit();
     }
 
@@ -106,6 +106,13 @@
 
         $idProducto = mysqli_real_escape_string($con, $_POST['idProducto']);
         $unidades = mysqli_real_escape_string($con, $_POST['unidades']);
+
+        if($unidades < 0 || $unidades == null){
+            $mensaje = "Numero de unidades no valido";
+            $tipo = "danger";
+            header("Location: paneldecontrol.php?mensaje=" . $mensaje . "&tipo=" . $tipo);
+            exit();
+        }
 
         $query = "UPDATE productos SET unidades = $unidades WHERE id = $idProducto";
 
