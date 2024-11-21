@@ -9,10 +9,10 @@
     if(!$session){
       echo "<ul class=\"navbar-nav me-auto\">
               <li class=\"nav-item\">
-                <a class=\"nav-link\" href=\"registro.html\">Registrarse</a>
+                <a class=\"nav-link\" href=\"registrate.php\">Registrarse</a>
               </li>
               <li class=\"nav-item\">
-                <a class=\"nav-link\" href=\"login.html\">Iniciar Sesion</a>
+                <a class=\"nav-link\" href=\"iniciosesion.php\">Iniciar Sesion</a>
               </li>
             </ul>";
     } else {

@@ -16,10 +16,16 @@
             $_SESSION["admin"] = $row["admin"];
             echo "<h1> Sesion iniciada </h1>";
         } else {
-            echo "Contraseña incorrecta";
+            $mensaje = "Contraseña incorrecta";
+            $tipo = "danger";
+            header("Location: " . $_SERVER['HTTP_REFERER'] . "?mensaje=" . $mensaje . "&tipo=" . $tipo);
+            exit();
         }
     } else {
-        echo "<h1> Usuario no existente </h1>";
+        $mensaje = "Usuario o contraseña incorrecta";
+        $tipo = "danger";
+        header("Location: " . $_SERVER['HTTP_REFERER'] . "?mensaje=" . $mensaje . "&tipo=" . $tipo);
+        exit();
     }
 
     header("Location: index.php");

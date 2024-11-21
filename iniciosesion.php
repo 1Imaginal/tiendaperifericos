@@ -1,3 +1,6 @@
+<?php
+  include("cambiarnav.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +10,7 @@
     <title>Tienda</title>
 </head>
 <body>
-  <nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #99846e;">
+<nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #99846e;">
     <div class="container-fluid">
       <a class="navbar-brand" href="index.php">Tienda perifericos</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
@@ -30,19 +33,14 @@
           <button class="btn btn-primary" type="button" action="resultado.php" method="get">Buscar</button>
         </form>
         <div class="d-flex flex-row-reverse">
-          <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="registro.html">Registrarse</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="login.html">Iniciar Sesion</a>
-            </li>
-          </ul>
+          <?php
+            cambiarnav($session, $nombre);
+            ?>
         </div>
       </div>
     </div>
   </nav>
-    <div class="container my-5" style="margin-top: 130px !important;">
+    <div class="container my-5">
       <h1 class="display-1" style="text-align:center">Inicia sesion</h1>
     </div>
     <div class="container position-absolute top-50 start-50 translate-middle">
