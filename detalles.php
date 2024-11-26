@@ -77,12 +77,10 @@
   </nav>
       <div class="container my-4">
         <div class="row">
-            <div class="col-7">
-                <div class="col-4">
-                    <img src="rsc/productos/<?php echo$row_producto['img'];?>"  alt="" srcset="">
-                </div>
+            <div class="col-12 col-md-6">
+                    <img src="rsc/productos/<?php echo$row_producto['img'];?>"  alt="producto" class="img-fluid">
             </div>
-            <div class="col-5 my-5" style="text-align:justify;">
+            <div class="col-12 col-md-6 my-5" style="text-align:justify;">
                 <h5 class="my-3"><?php echo $row_producto['fabricante']?></h5>
                 <h2 class="my-3"><?php echo $row_producto['modelo']?></h2>
                 <h4 class="my-3"><?php echo $row_producto['precio']-0.01 . "$"?></h4>

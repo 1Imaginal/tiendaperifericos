@@ -61,15 +61,15 @@
       $total=0;
       while($row = mysqli_fetch_array($result)){
         $total += ($row['precio'] - 0.01)*$row['unidades'];
-        echo "<div class=\"container\">";
+        echo "<div class=\"container-fluid\">";
         echo "<div class=\"row\">";
-        echo "<div class=\"col-3 my-2\">";
+        echo "<div class=\"col-12 col-sm-3\">";
         echo "<a href=\"detalles.php?id=" . $row['id'] . "&idCat=" . $row['idCat'] . "&idObj=" . $row['idObj'] . 
                 " \"style=\"text-decoration: none; color: #735334;\">";
         echo "<img class=\"img-thumbnail float-start\" src=\"rsc/productos/" . $row['img'] . "\" alt=\"" . $row['producto'] . 
-                    "\"style=\"width:250px; height:200px;\">";
+                    "\">";
         echo "</a>";
-        echo "</div><div class=\"col-3 my-4\"> ";
+        echo "</div><div class=\"col-12 col-sm-4 my-4\"> ";
         echo "<a href=\"detalles.php?id=" . $row['id'] . "&idCat=" . $row['idCat'] . "&idObj=" . $row['idObj'] . 
         " \"style=\"text-decoration: none; color: #735334;\">";
         echo "<h2>" . $row['producto'] . "</h2>";
@@ -85,7 +85,7 @@
         echo "</form>";
 
         echo "<h4>" . $row['precio'] - 0.01 . "$</h4>";
-        echo "</div> <div class=\"col-1 \"></div> <div class=\"col-2\">";
+        echo "</div> <div class=\"col-12 col-sm-2 text-end\">";
         echo "<form action=\"eliminarproducto.php\" method=\"post\">";
         echo "<button type=\"submit\" class=\"btn btn-danger btn-lg my-5\">Eliminar</button>";
         echo "<input type=\"hidden\" name=\"idProducto\" value=\"" . $row['id'] . "\">";
@@ -96,13 +96,14 @@
   
   <div class="container my-4">
     <div class="row">
-      <div class="col-7">
+
+      <div class="col-8">
         <h2>Total: <?php echo $total ."$"; ?></h2>
         <input type="hidden" id="total" value="<?php echo $total ?>">
       </div>
       <div class="col">
         <form action="realizarpedido.php" method="post">
-          <button type="submit" class="btn btn-outline-success btn-lg" id="realizarPedido" hidden>Realizar pedido</button>
+          <button type="submit" class="btn btn-outline-success btn-lg" id="realizarPedido" style="width: 100%" hidden>Realizar pedido</button>
         </form>
       </div>
     </div>
