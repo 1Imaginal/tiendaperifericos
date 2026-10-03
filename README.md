@@ -216,7 +216,7 @@ Por defecto, la base de datos de Docker se configura con las siguientes variable
 
 * **Cliente de prueba 1:** test-user-1 / test1234
 
-* **Cliente de prueba 2:** test-user-1 / test1234
+* **Cliente de prueba 2:** test-user- / test1234
 
 - - -
 
