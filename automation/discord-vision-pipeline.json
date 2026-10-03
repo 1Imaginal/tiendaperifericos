@@ -1,0 +1,392 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "30024139-2e88-4c77-a781-f7dcf7596f0b",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "cdc52dd4-e4d2-4edc-be50-f1d9ca64051e",
+      "name": "Webhook",
+      "webhookId": "30024139-2e88-4c77-a781-f7dcf7596f0b"
+    },
+    {
+      "parameters": {
+        "resource": "image",
+        "modelId": {
+          "__rl": true,
+          "value": "gemma4:e4b",
+          "mode": "list",
+          "cachedResultName": "gemma4:e4b"
+        },
+        "text": "=Eres un experto en hardware y periféricos de PC. Analiza la imagen adjunta y extrae la información del producto.\n\nVerifica si la imagen muestra realmente un mouse, un teclado o un mousepad. Si la imagen es de un animal, una persona, un paisaje, o cualquier otra cosa, debes asignar \"es_periferico\": false. Solo si es un periférico válido, asigna true.\n\nReglas de extracción:\n1. idCat: Asigna estrictamente el número entero 1 (Mouse), 2 (Teclado) o 3 (Mousepad).\n2. fabricante: Identifica la marca visible o más probable (ej. Razer, Zowie, Lamzu, Asus). Si no es visible, escribe \"Genérico\".\n3. modelo: Identifica el modelo exacto del producto.\n4. descripcion: Genera una breve descripción técnica de una sola línea basada en lo que ves en la imagen.\n\nREGLAS DE FORMATO ESTRICTAS:\nDevuelve ÚNICAMENTE un objeto JSON válido en texto plano.\nNO incluyas saludos, ni confirmaciones.\nNO envuelvas la respuesta en bloques de código markdown (como ```json o ```).\nNO agregues explicaciones antes ni después de las llaves {}.\n\nSigue exactamente esta estructura:\n{\n  \"es_periferico\": true,\n  \"idCat\": 1,\n  \"fabricante\": \"Nombre de la marca\",\n  \"modelo\": \"Nombre del modelo\",\n  \"descripcion\": \"Descripción generada\",\n  \"precio\": 0.0,\n  \"unidades\": 1,\n  \"img\": \"{{ $json.body.imageUrl }}\"\n}",
+        "inputType": null,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.ollama",
+      "typeVersion": 1,
+      "position": [
+        448,
+        0
+      ],
+      "id": "171f146e-af57-4d12-89db-6b521f55eb31",
+      "name": "Analyze image",
+      "credentials": {
+        "ollamaApi": {
+          "id": "9isGZOULc8rpFooD",
+          "name": "Ollama account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "webhook",
+        "content": "=Producto añadido exitosamente",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        1616,
+        -112
+      ],
+      "id": "c63f0b5f-0541-42a0-8c99-6e3235606569",
+      "name": "Discord",
+      "webhookId": "6393749e-8780-4b13-9960-166604676d92",
+      "credentials": {
+        "discordWebhookApi": {
+          "id": "kx3kTAEdr7DYXyZ9",
+          "name": "Discord Webhook account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.body.imageUrl }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        224,
+        0
+      ],
+      "id": "9d826317-fdac-4267-b3cf-31de6378cc10",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://192.168.101.100:8080/api_producto.php",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "mi_llave_secreta_v1"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "=keypair",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "modelo",
+              "value": "={{ $json.modelo }}"
+            },
+            {
+              "name": "fabricante",
+              "value": "={{ $json.fabricante }}"
+            },
+            {
+              "name": "descripcion",
+              "value": "={{ $json.descripcion }}"
+            },
+            {
+              "name": "idCat",
+              "value": "={{ $json.idCat }}"
+            },
+            {
+              "name": "precio",
+              "value": "={{ $json.precio }}"
+            },
+            {
+              "name": "unidades",
+              "value": "={{ $json.unidades }}"
+            },
+            {
+              "name": "img",
+              "value": "={{ $json.img }}"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        1152,
+        -16
+      ],
+      "id": "4403646d-06a5-494d-9502-194adbd9a59d",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "0a760ebd-346e-495d-b329-ed031dad61d2",
+              "leftValue": "={{ $json.statusCode }}",
+              "rightValue": 201,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1376,
+        -16
+      ],
+      "id": "53861098-dbf8-427d-bb2d-7ef9fee6a810",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "authentication": "webhook",
+        "content": "=Ocurrió un error al tratar de añadir el producto",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        1616,
+        80
+      ],
+      "id": "7bc67db2-3437-41c5-a3d0-ad25402d1926",
+      "name": "Discord1",
+      "webhookId": "6393749e-8780-4b13-9960-166604676d92",
+      "credentials": {
+        "discordWebhookApi": {
+          "id": "kx3kTAEdr7DYXyZ9",
+          "name": "Discord Webhook account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "898f6c85-809c-4308-a3a7-0e47c158d5dd",
+              "leftValue": "={{ $json.es_periferico }}",
+              "rightValue": "=false",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {
+          "ignoreCase": false
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        896,
+        0
+      ],
+      "id": "4c4ef281-904f-4e6b-a904-415114b99a00",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "authentication": "webhook",
+        "content": "=Ocurrió un error al tratar de añadir el producto. La imagen enviada no es un periférico",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        1072,
+        192
+      ],
+      "id": "ea8b157a-16eb-4406-bd1a-ffb4f6876820",
+      "name": "Discord2",
+      "webhookId": "6393749e-8780-4b13-9960-166604676d92",
+      "credentials": {
+        "discordWebhookApi": {
+          "id": "kx3kTAEdr7DYXyZ9",
+          "name": "Discord Webhook account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const textoJson = $input.first().json.content;\nlet datos = JSON.parse(textoJson);\n\nif (Array.isArray(datos)) {\n    datos = datos[0];\n}\n\n// Devolvemos el objeto directamente\nreturn datos;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        672,
+        0
+      ],
+      "id": "6c5d5ace-2aed-4096-b50c-4e3c41ddda16",
+      "name": "Code in JavaScript"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Analyze image": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Analyze image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Discord",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Discord1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Discord2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "2cac8bcf-d9cf-4006-aa27-5d9554953a83",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0891aa8decc64dbde145c363602a51d83a02bcd082d3ea0534026ce5cf5da0f7"
+  },
+  "nodeGroups": [],
+  "id": "aLBtVb5bJiBbEWH4",
+  "tags": []
+}
