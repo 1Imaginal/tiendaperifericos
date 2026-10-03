@@ -50,6 +50,80 @@ El código está organizado bajo el principio de separación de responsabilidade
 
 * **Base de Datos Normalizada:** Estructura relacional optimizada con tablas específicas para fabricantes, categorías y especificaciones técnicas por tipo de periférico.
 
+### Diagrama Entidad-Relación (ER)
+
+```mermaid
+erDiagram
+    USUARIOS {
+        int id PK
+        string password
+        bool rol
+    }
+    FABRICANTE {
+        int id PK
+        string nombre
+    }
+    CATEGORIAS {
+        int id PK
+        string nombre
+    }
+    PRODUCTOS {
+        int id PK
+        string modelo
+        string descripcion
+        float precio
+        int unidades
+        string img
+        int idFab FK "Ref: FABRICANTE"
+        int idCat FK "Ref: CATEGORIAS"
+        int idObj FK "Ref: MOUSE, TECLADO o MOUSEPAD"
+    }
+    MOUSE {
+        int id PK
+        string forma
+        string sensor
+        string peso
+    }
+    TECLADO {
+        int id PK
+        string tamano
+        string switches
+        string rgb
+    }
+    MOUSEPAD {
+        int id PK
+        string material
+        string tamano
+        string color
+    }
+    CARRITO {
+        int id PK
+        int id_usuario FK
+        int id_producto FK
+        int cantidad
+    }
+    COMPRAS {
+        int id PK
+        int id_usuario FK
+        float total
+        datetime fecha
+    }
+
+    %% Relaciones
+    FABRICANTE ||--o{ PRODUCTOS : "fabrica"
+    CATEGORIAS ||--o{ PRODUCTOS : "clasifica"
+    
+    %% Relaciones polimórficas (idObj)
+    PRODUCTOS |o--o| MOUSE : "especifica (Si idCat=1)"
+    PRODUCTOS |o--o| TECLADO : "especifica (Si idCat=2)"
+    PRODUCTOS |o--o| MOUSEPAD : "especifica (Si idCat=3)"
+    
+    %% Relaciones de transacciones
+    USUARIOS ||--o{ CARRITO : "gestiona"
+    PRODUCTOS ||--o{ CARRITO : "contiene"
+    USUARIOS ||--o{ COMPRAS : "realiza"
+```
+
 * **Seguridad y Autenticación:** Contraseñas cifradas con Bcrypt (password_hash / password_verify) y control de sesiones robusto con protección contra ejecución prematura de cabeceras.
 
 * **Gestión de Carrito y Pedidos:** Añadir, actualizar unidades y eliminar productos del carrito de compras. Validación en tiempo real de stock disponible y transacción automatizada al realizar el pedido (descuento automático de stock y limpieza de carrito).
@@ -82,7 +156,7 @@ La forma más sencilla de levantar el proyecto es utilizando Docker. No es neces
 
 ```Bash
 
-    git clone <URL_DE_TU_REPOSITORIO>
+    git clone https://github.com/1Imaginal/tiendaperifericos
     cd tiendaperifericos
 ```
 
@@ -146,4 +220,4 @@ Por defecto, la base de datos de Docker se configura con las siguientes variable
 
 # Gestión de Archivos
 
-Las imágenes de los productos subidas desde el panel de administrador o capturadas por el bot de automatización se guardan automáticamente en la ruta /frontend/rsc/productos/. El volumen de Docker está configurado para reflejar y persistir estos cambios instantáneamente en el disco local.
+Las imágenes de los productos subidas desde el panel de administrador o capturadas por el bot de automatización se guardan automáticamente en la ruta /frontend/rsc/productos/. El volumen de Docker está configurado para reflejar y persistir estos cambios instantáneamente en el disco local. 
