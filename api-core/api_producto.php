@@ -2,7 +2,8 @@
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
 
-include("conexion.php");
+// 1. Ruta absoluta para la conexión a la base de datos
+include($_SERVER['DOCUMENT_ROOT'] . "/api-core/conexion.php");
 
 $api_key_secreta = "mi_llave_secreta_v1"; 
 $headers = apache_request_headers();
@@ -19,7 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit();
 }
 
-// Volvemos a leer el JSON puro
 $jsonDatos = file_get_contents("php://input");
 $data = json_decode($jsonDatos, true);
 
@@ -29,7 +29,6 @@ if (!$data) {
     exit();
 }
 
-// Sanitizar datos básicos
 $modelo = mysqli_real_escape_string($con, $data['modelo']);
 $descripcion = isset($data['descripcion']) ? mysqli_real_escape_string($con, $data['descripcion']) : '';
 $idObj = isset($data['idObj']) ? (int)$data['idObj'] : 'NULL';
@@ -39,29 +38,31 @@ $unidades = isset($data['unidades']) ? (int)$data['unidades'] : 0;
 
 // --- LÓGICA DE DESCARGA DE IMAGEN AUTOMÁTICA ---
 $img_url = isset($data['img']) ? $data['img'] : '';
-$img_final = 'default.png'; // Imagen por defecto si algo falla
+$img_final = 'default.png';
 
-// Verificamos si lo que llegó en el JSON es una URL válida
 if (filter_var($img_url, FILTER_VALIDATE_URL)) {
     
-    // 1. Descargamos el contenido binario desde Discord
-    // El @ suprime warnings en caso de que la URL haya expirado
     $imagen_contenido = @file_get_contents($img_url);
     
     if ($imagen_contenido !== false) {
-        // 2. Generamos un nombre único local (ej: 1715423_abc123.jpg)
         $img_final = time() . "_" . uniqid() . ".jpg";
-        $ruta_destino = "rsc/productos/" . $img_final;
         
-        // 3. Guardamos la imagen físicamente en el contenedor/servidor
+        // 2. Ruta absoluta para guardar imágenes en la carpeta del frontend
+        $directorioDestino = $_SERVER['DOCUMENT_ROOT'] . "/rsc/productos/";
+        
+        // Aseguramos que la carpeta exista
+        if (!file_exists($directorioDestino)) {
+            mkdir($directorioDestino, 0777, true);
+        }
+        
+        $ruta_destino = $directorioDestino . $img_final;
         file_put_contents($ruta_destino, $imagen_contenido);
     }
 } else if ($img_url !== '') {
-    // Si mandaron un texto normal (ej. "mouse.jpg"), lo usamos directamente
     $img_final = mysqli_real_escape_string($con, $img_url);
 }
 
-// LÓGICA DEL FABRICANTE: Buscar o Crear
+// LÓGICA DEL FABRICANTE
 $nombreFabricante = isset($data['fabricante']) ? mysqli_real_escape_string($con, trim($data['fabricante'])) : '';
 $idFab = 'NULL';
 

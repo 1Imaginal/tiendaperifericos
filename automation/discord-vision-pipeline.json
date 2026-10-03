@@ -90,7 +90,7 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "http://192.168.101.100:8080/api_producto.php",
+        "url": "http://192.168.101.102:8080/api-core/api_producto.php",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -105,7 +105,6 @@
           ]
         },
         "sendBody": true,
-        "specifyBody": "=keypair",
         "bodyParameters": {
           "parameters": [
             {
@@ -141,7 +140,8 @@
         "options": {
           "response": {
             "response": {
-              "fullResponse": true
+              "fullResponse": true,
+              "responseFormat": "text"
             }
           }
         }
@@ -381,7 +381,7 @@
     "executionOrder": "v1",
     "binaryMode": "separate"
   },
-  "versionId": "2cac8bcf-d9cf-4006-aa27-5d9554953a83",
+  "versionId": "b36264ac-17b3-4b83-8230-82ea74c3ad85",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "0891aa8decc64dbde145c363602a51d83a02bcd082d3ea0534026ce5cf5da0f7"

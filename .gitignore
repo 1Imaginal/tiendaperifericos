@@ -1,1 +1,4 @@
-automation/discord-bot.js
+*automation
+!automation/discord-bot-no-credentials.js
+!automation/discord-vision-pipeline.json
+!automation/workflow.png
