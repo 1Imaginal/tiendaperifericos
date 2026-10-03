@@ -2,7 +2,7 @@
     include("conexion.php");
 
     if(!$session){
-        header("Location: login.html");
+        header("Location: iniciosesion.php");
         exit();
     }
     
@@ -20,6 +20,6 @@
         $tipo = "danger";
     }
 
-    header("Location: carrito.php?mensaje=" . urlencode($mensaje) . "&tipo=" . $tipo);
+    header("Location: /carrito.php?mensaje=" . urlencode($mensaje) . "&tipo=" . $tipo);
     exit();
 ?>

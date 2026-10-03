@@ -1,5 +1,5 @@
 <?php
-  include("cambiarnav.php");
+  include("api-core/cambiarnav.php");
 ?>
 
 <!DOCTYPE html>

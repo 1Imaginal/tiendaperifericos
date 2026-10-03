@@ -2,7 +2,7 @@
     include("conexion.php");
 
     if (!$session) {
-        header("Location: login.html");
+        header("Location: iniciosesion.php");
         exit();
     }
 
@@ -30,6 +30,6 @@
     mysqli_close($con);
 
     // Redirigir nuevamente al carrito después de actualizar
-    header("Location: carrito.php");
+    header("Location: ../carrito.php");
     exit();
 ?>

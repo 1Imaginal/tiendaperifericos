@@ -31,6 +31,6 @@
     }
 
     // Usamos urlencode() por si el mensaje tiene espacios
-    header("Location: carrito.php?mensaje=" . urlencode($mensaje) . "&tipo=" . $tipo);
+    header("Location: ../carrito.php?mensaje=" . urlencode($mensaje) . "&tipo=" . $tipo);
     exit();
 ?>

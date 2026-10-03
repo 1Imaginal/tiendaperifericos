@@ -2,7 +2,7 @@
     include("conexion.php");
 
     if(!$session){
-        header("Location: login.html");
+        header("Location: iniciosesion.php");
         exit();
     }
 
@@ -52,6 +52,6 @@
     
     $mensaje = "Pedido realizado con éxito";
     $tipo = "success";
-    header("Location: compras.php?mensaje=" . urlencode($mensaje) . "&tipo=" . $tipo);
+    header("Location: ../compras.php?mensaje=" . urlencode($mensaje) . "&tipo=" . $tipo);
     exit();
 ?>

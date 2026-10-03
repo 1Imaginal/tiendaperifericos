@@ -1,4 +1,4 @@
-<?php include("../cambiarnav.php");?>
+<?php include("api-core/cambiarnav.php");?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -120,7 +120,7 @@
                    
                    echo "<li class=\"my-4\">" . $row_producto["unidades"] . " Unidades disponibles</li>";
 
-                   echo "<form action=\"../agregarproducto.php\" method=\"post\">";
+                   echo "<form action=\"api-core/agregarproducto.php\" method=\"post\">";
                    echo "<input type=\"hidden\" name=\"idProducto\" value=\"" . $id . "\">";
                    echo "<input type=\"hidden\" name=\"idCat\" value=\"" . $idCat . "\">";
                    echo "<input type=\"hidden\" name=\"precio\" value=\"" . $row_producto['precio'] . "\">";
@@ -129,7 +129,7 @@
 
                    if(isset($_SESSION["admin"])){
                     if($_SESSION["admin"]){
-                      echo "<form action=\"../funcionesAdministrador.php\" method=\"post\">";
+                      echo "<form action=\"api-core/funcionesAdministrador.php\" method=\"post\">";
                       echo "
                       <input type=\"hidden\" name=\"idProducto\" value=\"" . $id . "\">
                       <div class=\"row my-4\">

@@ -1,13 +1,13 @@
 <?php
-      include("cambiarnav.php");
+      include("api-core/cambiarnav.php");
 
       if(!$session){
         header("Location: login.html");
         exit();
       }
       $id = $_SESSION["id"];
-      $query = "SELECT p.modelo AS producto, p.img, p.id, p.idCat, p.idObj, c.unidades, c.precio FROM carrito c 
-      INNER JOIN productos p ON c.idProducto=p.id where idUsuario = $id";
+      $query = "SELECT p.modelo AS producto, c.unidades, c.precio, c.fecha FROM compras c 
+      INNER JOIN productos p ON c.idProducto=p.id WHERE idUsuario = $id ORDER BY c.fecha DESC";
 
       if(mysqli_connect_errno()){ 
         echo "<div class=\"alert alert-success\"><strong>Error</strong>" . mysqli_connect_error() . "</div>";
@@ -57,8 +57,29 @@
     </div>
   </nav>
   <div class="container-flex m-3">
-    <h1>Favoritos</h1>
-    <h1 class="display-1 m-5" style="text-align: center;">En construccion</h1>
+    <h1>Historial de compras</h1>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Unidades</th>
+          <th>Precio</th>
+          <th>Fecha</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php
+          while($row = mysqli_fetch_array($result)){
+            echo "<tr>";
+            echo "<td>" . $row["producto"] . "</td>";
+            echo "<td>" . $row["unidades"] . "</td>";
+            echo "<td>" . $row["precio"] . "</td>";
+            echo "<td>" . $row["fecha"] . "</td>";
+            echo "</tr>";
+          }
+        ?>
+      </tbody>
+    </table>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

@@ -1,17 +1,21 @@
 services:
   web:
-    build: .
-    ports:
-      - "8080:80"
-    volumes:
-      - .:/var/www/html
-    environment:
-      - DB_HOST=db
-      - DB_USER=root
-      - DB_PASS=admin_perifericos
-      - DB_NAME=tienda_perifericos
-    depends_on:
-      - db
+      build: .
+      ports:
+        - "8080:80"
+      volumes:
+        # 1. Frontend como raíz (incluye automáticamente a ./frontend/rsc/)
+        - ./frontend:/var/www/html
+        
+        # 2. Backend inyectado como subruta
+        - ./api-core:/var/www/html/api-core
+      environment:
+        - DB_HOST=db
+        - DB_USER=root
+        - DB_PASS=admin_perifericos
+        - DB_NAME=tienda_perifericos
+      depends_on:
+        - db
 
   db:
     image: mariadb:10.11
@@ -23,7 +27,26 @@ services:
       - "3307:3306"
     volumes:
       - db_data:/var/lib/mysql
-      - ./db.sql:/docker-entrypoint-initdb.d/db.sql
+      - ./infrastructure/db.sql:/docker-entrypoint-initdb.d/db.sql
+
+  n8n:
+    image: docker.n8n.io/n8nio/n8n
+    restart: always
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_HOST=localhost
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - NODE_ENV=production
+      - WEBHOOK_URL=http://localhost:5678/
+      - GENERIC_TIMEZONE=America/Mexico_City
+    volumes:
+      # Volumen crucial para no perder tus flujos ni credenciales al reiniciar
+      - n8n_data:/home/node/.n8n
+    depends_on:
+      - web
 
 volumes:
   db_data:
+  n8n_data:

@@ -1,8 +1,8 @@
 <?php
-      include("cambiarnav.php");
+      include("api-core/cambiarnav.php");
 
       if(!$session){
-        header("Location: login.html");
+        header("Location: iniciosesion.html");
         exit();
       }
       $id = $_SESSION["id"];
@@ -75,7 +75,7 @@
         echo "<h2>" . $row['producto'] . "</h2>";
         echo "</a>";
 
-        echo "<form action=\"actualizarUnidades.php\" method=\"POST\">";
+        echo "<form action=\"api-core/actualizarUnidades.php\" method=\"POST\">";
         echo "<label for=\"unidades-" . $row['id'] . "\" class=\"form-label\">Unidades:</label>";
         echo "<div class=\"d-flex align-items-center\">";
         echo "<button type=\"submit\" name=\"accion\" value=\"decrementar\" class=\"btn btn-danger\">-</button>";
@@ -86,7 +86,7 @@
 
         echo "<h4>" . $row['precio'] - 0.01 . "$</h4>";
         echo "</div> <div class=\"col-12 col-sm-2 text-end\">";
-        echo "<form action=\"eliminarproducto.php\" method=\"post\">";
+        echo "<form action=\"api-core/eliminarproducto.php\" method=\"post\">";
         echo "<button type=\"submit\" class=\"btn btn-danger btn-lg my-5\">Eliminar</button>";
         echo "<input type=\"hidden\" name=\"idProducto\" value=\"" . $row['id'] . "\">";
         echo "</form>";
@@ -102,7 +102,7 @@
         <input type="hidden" id="total" value="<?php echo $total ?>">
       </div>
       <div class="col">
-        <form action="realizarpedido.php" method="post">
+        <form action="api-core/realizarpedido.php" method="post">
           <button type="submit" class="btn btn-outline-success btn-lg" id="realizarPedido" style="width: 100%" hidden>Realizar pedido</button>
         </form>
       </div>

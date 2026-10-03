@@ -1,8 +1,8 @@
 <?php
-  include("cambiarnav.php");
+  include("api-core/cambiarnav.php");
 
   if(!$session){
-    header("Location: login.html");
+    header("Location: iniciosesion.php");
     exit();
   }
   $id = $_SESSION["id"];
@@ -77,7 +77,7 @@
 
   <div class="container-flex m-3">
     <h1>Panel de control</h1>
-    <form action="funcionesAdministrador.php" method="POST">
+    <form action="api-core/funcionesAdministrador.php" method="POST">
       <input type="hidden" name="accion" value="actualizarProducto">
       <div class="mb-3 mt-3">
         <select class="form-select" aria-label="Producto a modificar" name="idProducto">
@@ -102,7 +102,7 @@
 
     <div class="container-flex m-3">
       <h1>Insertar fabricante</h1>
-      <form action="funcionesAdministrador.php" method="post">
+      <form action="api-core/funcionesAdministrador.php" method="post">
         <!-- El input oculto define qué función se ejecutará en PHP -->
         <input type="hidden" name="accion" value="insertarFabricante">
         <div class="my-3">
@@ -116,7 +116,7 @@
     <hr class="m-4">
 
     <h1>Insertar producto</h1>
-    <form action="funcionesAdministrador.php" method="post" enctype="multipart/form-data">
+    <form action="api-core/funcionesAdministrador.php" method="post" enctype="multipart/form-data">
       <input type="hidden" name="accion" value="insertarProducto">
 
             <div class="my-3">
@@ -171,7 +171,7 @@
 
             <div class="mb-3">
               <label for="unidades" class="form-label">Unidades</label>
-              <input type="number" class="form-control" id="unidades" placeholder="Precio del producto" name="unidades" min="0" required>
+              <input type="number" class="form-control" id="unidades" placeholder="Unidades iniciales" name="unidades" min="0" required>
             </div>
 
             <div class="mb-3">
