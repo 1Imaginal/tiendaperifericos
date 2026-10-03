@@ -1,8 +1,8 @@
+<?php include("cambiarnav.php");?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <?php
-      include("cambiarnav.php");
 
       $idCat = $_GET['idCat'];
       $query = "SELECT p.id, p.modelo, p.idCat, p.unidades, p.idObj, f.nombre AS fabricante, p.precio, p.img FROM productos p INNER JOIN fabricante f ON f.id=p.idFab WHERE

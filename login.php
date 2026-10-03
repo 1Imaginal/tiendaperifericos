@@ -11,10 +11,8 @@
 
     if($row != null){
         if(password_verify($password,$row["password_hash"])){
-            session_start();
             $_SESSION["id"] = $row["id"];
             $_SESSION["admin"] = $row["admin"];
-            echo "<h1> Sesion iniciada </h1>";
         } else {
             $mensaje = "Contraseña incorrecta";
             $tipo = "danger";

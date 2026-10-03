@@ -41,14 +41,16 @@ CREATE TABLE IF NOT EXISTS fabricante (
 DROP TABLE IF EXISTS productos;
 CREATE TABLE productos (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    modelo VARCHAR(150) NOT NULL,
-    img VARCHAR(255),
-    idCat INT,
+    modelo VARCHAR(100) NOT NULL,
+    descripcion TEXT,              -- <-- Añadir esta línea
     idObj INT,
-    precio DECIMAL(10,2),
-    unidades INT NOT NULL DEFAULT 0,
     idFab INT,
+    idCat INT,
+    precio DECIMAL(10,2),
+    unidades INT,
+    img VARCHAR(255),
     FOREIGN KEY (idFab) REFERENCES fabricante(id) ON DELETE SET NULL
+    -- (Y tus otras llaves foráneas)
 );
 
 --- Tabla Mouse

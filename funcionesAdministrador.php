@@ -19,9 +19,27 @@
             $mensaje = "Producto eliminado";
             $tipo = "danger";
         }
+        elseif ($accion == 'insertarFabricante') {
+            insertarFabricante($con);
+            $mensaje = "Fabricante insertado";
+            $tipo = "success";
+        }
         
-        header("Location: paneldecontrol.php?mensaje=" . $mensaje . "&tipo=" . $tipo);
+        header("Location: paneldecontrol.php?mensaje=" . urlencode($mensaje) . "&tipo=" . $tipo);
         exit();
+    }
+
+    function insertarFabricante($con){
+
+        $nombre = mysqli_real_escape_string($con, $_POST['nombre']);
+
+        $query = "INSERT INTO  fabricante (nombre) VALUES ('$nombre')";
+
+        if (!mysqli_query($con, $query)) {
+            echo "<div class=\"alert alert-warning\">
+            <strong>Error</strong> Registro fallido.
+            </div>";
+        }
     }
 
 

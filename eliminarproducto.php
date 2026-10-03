@@ -1,24 +1,25 @@
 <?php
     include("conexion.php");
 
-    $idProducto = mysqli_real_escape_string($con, $_POST['idProducto']);
-
     if(!$session){
         header("Location: login.html");
         exit();
     }
     
+    $idProducto = mysqli_real_escape_string($con, $_POST['idProducto']);
     $id = $_SESSION["id"];
 
     $query = "DELETE FROM carrito where idUsuario = $id AND idProducto = $idProducto";
 
-    // Ejecutar la consulta y verificar el resultado
+    // Evaluamos sin hacer 'echo' y corregimos el mensaje
     if (mysqli_query($con, $query)) {
-        echo "Producto agregado al carrito";
+        $mensaje = "Producto eliminado del carrito";
+        $tipo = "warning"; // Usamos warning (amarillo) para denotar eliminación
     } else {
-        echo "Error: " . mysqli_error($con);
+        $mensaje = "Error al eliminar el producto";
+        $tipo = "danger";
     }
 
-    header("Location: carrito.php");
+    header("Location: carrito.php?mensaje=" . urlencode($mensaje) . "&tipo=" . $tipo);
     exit();
 ?>

@@ -34,13 +34,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="rsc/style.css">
     <title>Tienda</title>
+
 </head>
 <body>
+
   <nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #99846e;">
     <div class="container-fluid">
       <a class="navbar-brand" href="index.php">Tienda perifericos</a>
@@ -71,6 +74,7 @@
       </div>
     </div>
   </nav>
+
   <div class="container-flex m-3">
     <h1>Panel de control</h1>
     <form action="funcionesAdministrador.php" method="POST">
@@ -95,13 +99,31 @@
       </form>
     </div>
     <div class="container-flex m-3">
+
+    <div class="container-flex m-3">
+      <h1>Insertar fabricante</h1>
+      <form action="funcionesAdministrador.php" method="post">
+        <!-- El input oculto define qué función se ejecutará en PHP -->
+        <input type="hidden" name="accion" value="insertarFabricante">
+        <div class="my-3">
+          <label for="nombreFabricante" class="form-label">Nombre del fabricante</label>
+          <input type="text" class="form-control" id="nombreFabricante" placeholder="Ej. Asus, Corsair..." name="nombre" required>
+        </div>
+        <button type="submit" class="btn btn-success">Añadir fabricante</button>
+      </form>
+    </div>
+
+    <hr class="m-4">
+
     <h1>Insertar producto</h1>
     <form action="funcionesAdministrador.php" method="post" enctype="multipart/form-data">
       <input type="hidden" name="accion" value="insertarProducto">
+
             <div class="my-3">
               <label for="modelo" class="form-label">Modelo</label>
               <input type="text" class="form-control" id="modelo" placeholder="Modelo del producto" name="modelo" required>
             </div>
+
             <div class="mb-3">
               <label for="fabricante" class="form-label">Fabricante</label>
               <select class="form-select" aria-label="Producto a modificar" name="idFabricante" required>
@@ -113,6 +135,7 @@
                   ?>
               </select>
             </div>
+
             <div class="mb-3">
               <label for="idCategoria" class="form-label">Categoria</label>
               <select class="form-select" aria-label="Producto a modificar" name="idCategoria" required>
@@ -122,35 +145,44 @@
                 <option value="3">Mousepad</option>
               </select>
             </div>
+
             <div class="row my-3">
               <div class="col-4">
                 <label for="caracteristica1" class="form-label">Caracteristica 1</label>
                 <input type="text" class="form-control" id="caracteristica1" placeholder="Caracteristica" name="caracteristica1">
               </div>
+
               <div class="col-4">
                 <label for="caracteristica2" class="form-label">Caracteristica 2</label>
                 <input type="text" class="form-control" id="caracteristica2" placeholder="Caracteristica" name="caracteristica2">
               </div>
+
               <div class="col-4">
                 <label for="caracteristica1" class="form-label">Caracteristica 3</label>
                 <input type="text" class="form-control" id="caracteristica3" placeholder="Caracteristica" name="caracteristica3">
               </div>
+
             </div>
+
             <div class="mb-3">
               <label for="precio" class="form-label">Precio</label>
               <input type="number" class="form-control" id="precio" placeholder="Precio del producto" name="precio" min="0" required>
             </div>
+
             <div class="mb-3">
               <label for="unidades" class="form-label">Unidades</label>
               <input type="number" class="form-control" id="unidades" placeholder="Precio del producto" name="unidades" min="0" required>
             </div>
+
             <div class="mb-3">
               <label for="img" class="form-label">Imagen</label>
               <input type="file" class="form-control" id="img" placeholder="Imagen del producto" name="img">
             </div>
+
             <button type="submit" class="btn btn-primary">Insertar producto</button>
           </form>
     </div>
+
     <div class="container-flex m-3">
     <h1>Historial de transacciones</h1>
     <table class="table table-striped">
@@ -178,7 +210,9 @@
       </tbody>
     </table>
   </div>
+
   </div>
+  
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

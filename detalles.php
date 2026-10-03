@@ -1,8 +1,8 @@
+<?php include("cambiarnav.php");?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <?php
-        include("cambiarnav.php");
 
         $id = $_GET['id'];
         $idCat = $_GET['idCat'];

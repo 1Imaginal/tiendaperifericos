@@ -1,5 +1,5 @@
 .card a:hover{
-    padding-inline: 10px;
+    transform: scale(1.05);
 }
 
 .card-text{
