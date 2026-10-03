@@ -1,12 +1,12 @@
-<?php include("cambiarnav.php");?>
+<?php include("../cambiarnav.php");?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <?php
-
-        $id = $_GET['id'];
-        $idCat = $_GET['idCat'];
-        $idObj = $_GET['idObj'];
+        // 1. Recibimos variables y nos aseguramos de que idObj sea 0 si viene vacío
+        $id = intval($_GET['id']);
+        $idCat = intval($_GET['idCat']);
+        $idObj = (isset($_GET['idObj']) && $_GET['idObj'] !== '') ? intval($_GET['idObj']) : 0;
         
         $query_producto  = "SELECT p.modelo, p.precio, p.img, p.unidades, p.descripcion, f.nombre AS fabricante FROM productos p
         INNER JOIN fabricante f ON f.id=p.idFab  WHERE idCat = $idCat AND p.id = $id";
@@ -14,29 +14,35 @@
         $result_producto = mysqli_query($con,$query_producto);
         $row_producto = mysqli_fetch_array($result_producto);
 
-        switch($idCat){
-          case 1:
-            $query_caracteristicas = "SELECT forma, sensor, peso FROM mouse WHERE id = $idObj";
-            break;
-          case 2:
-            $query_caracteristicas = "SELECT tamano, switches, rgb FROM teclado WHERE id = $idObj";
-            break;
-          case 3:
-            $query_caracteristicas = "SELECT  material, tamano, color FROM mousepad WHERE id = $idObj";
-            break;
-        }
+        $row_caracteristicas = null; // Inicializamos nulo por si no hay idObj
 
-        $result_caracteristicas = mysqli_query($con,$query_caracteristicas);
-        $row_caracteristicas = mysqli_fetch_assoc($result_caracteristicas);
+        // 2. Solo consultamos especificaciones si idObj es mayor a 0
+        if ($idObj > 0) {
+            switch($idCat){
+              case 1:
+                $query_caracteristicas = "SELECT forma, sensor, peso FROM mouse WHERE id = $idObj";
+                break;
+              case 2:
+                $query_caracteristicas = "SELECT tamano, switches, rgb FROM teclado WHERE id = $idObj";
+                break;
+              case 3:
+                $query_caracteristicas = "SELECT material, tamano, color FROM mousepad WHERE id = $idObj";
+                break;
+            }
+
+            if (isset($query_caracteristicas)) {
+                $result_caracteristicas = mysqli_query($con, $query_caracteristicas);
+                if ($result_caracteristicas) {
+                    $row_caracteristicas = mysqli_fetch_assoc($result_caracteristicas);
+                }
+            }
+        }
 
         if(mysqli_connect_errno()){ 
           echo "<div class=\"alert alert-success\"><strong>Error</strong>" . mysqli_connect_error() . "</div>";
         }
   
-
-
         mysqli_close($con);
-  
     ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -46,20 +52,20 @@
 <body>
   <nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #99846e;">
     <div class="container-fluid">
-      <a class="navbar-brand" href="index.php">Tienda perifericos</a>
+      <a class="navbar-brand" href="../index.php">Tienda perifericos</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="mynavbar">
       <ul class="navbar-nav me-auto">
           <li class="nav-item">
-            <a class="nav-link" href="productos.php?idCat=1">Mouse</a>
+            <a class="nav-link" href="../productos.php?idCat=1">Mouse</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="productos.php?idCat=2">Teclado</a>
+            <a class="nav-link" href="../productos.php?idCat=2">Teclado</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="productos.php?idCat=3">Mousepad</a>
+            <a class="nav-link" href="../productos.php?idCat=3">Mousepad</a>
           </li>
         </ul>
         <form class="d-flex">
@@ -78,7 +84,7 @@
       <div class="container my-4">
         <div class="row">
             <div class="col-12 col-md-6">
-                    <img src="rsc/productos/<?php echo$row_producto['img'];?>"  alt="producto" class="img-fluid">
+                    <img src="../rsc/productos/<?php echo $row_producto['img'];?>"  alt="producto" class="img-fluid">
             </div>
             <div class="col-12 col-md-6 my-5" style="text-align:justify;">
                 <h5 class="my-3"><?php echo $row_producto['fabricante']?></h5>
@@ -88,27 +94,33 @@
                 <h3>Caracteristicas</h3>
                 <ul>
                 <?php
-                   switch($idCat){
-                    case 1:
-                      echo "<li class=\"my-3\">Forma : " . $row_caracteristicas["forma"] . "</li>";
-                      echo "<li class=\"my-3\">Sensor : " . $row_caracteristicas["sensor"] . "</li>"; 
-                      echo "<li class=\"my-3\">Peso : " . $row_caracteristicas["peso"] . "</li>";
-                      break;
-                    case 2:
-                      echo "<li class=\"my-3\">Tamaño : " . $row_caracteristicas["tamano"] . "</li>";
-                      echo "<li class=\"my-3\">Switches : " . $row_caracteristicas["switches"] . "</li>"; 
-                      echo "<li class=\"my-3\">RGB : " . $row_caracteristicas["rgb"] . "</li>";
-                      break;
-                    case 3:
-                      echo "<li class=\"my-3\">Material : " . $row_caracteristicas["material"] . "</li>";
-                      echo "<li class=\"my-3\">Tamaño : " . $row_caracteristicas["tamano"] . "</li>"; 
-                      echo "<li class=\"my-3\">Color : " . $row_caracteristicas["color"] . "</li>";
-                      break;
+                   // 3. Mostramos las características solo si existen
+                   if ($row_caracteristicas) {
+                       switch($idCat){
+                        case 1:
+                          echo "<li class=\"my-3\">Forma : " . $row_caracteristicas["forma"] . "</li>";
+                          echo "<li class=\"my-3\">Sensor : " . $row_caracteristicas["sensor"] . "</li>"; 
+                          echo "<li class=\"my-3\">Peso : " . $row_caracteristicas["peso"] . "</li>";
+                          break;
+                        case 2:
+                          echo "<li class=\"my-3\">Tamaño : " . $row_caracteristicas["tamano"] . "</li>";
+                          echo "<li class=\"my-3\">Switches : " . $row_caracteristicas["switches"] . "</li>"; 
+                          echo "<li class=\"my-3\">RGB : " . $row_caracteristicas["rgb"] . "</li>";
+                          break;
+                        case 3:
+                          echo "<li class=\"my-3\">Material : " . $row_caracteristicas["material"] . "</li>";
+                          echo "<li class=\"my-3\">Tamaño : " . $row_caracteristicas["tamano"] . "</li>"; 
+                          echo "<li class=\"my-3\">Color : " . $row_caracteristicas["color"] . "</li>";
+                          break;
+                       }
+                   } else {
+                       // Mensaje fallback para productos de n8n
+                       echo "<li class=\"my-3 text-muted\">Especificaciones técnicas detalladas pendientes.</li>";
                    }
                    
                    echo "<li class=\"my-4\">" . $row_producto["unidades"] . " Unidades disponibles</li>";
 
-                   echo "<form action=\"agregarproducto.php\" method=\"post\">";
+                   echo "<form action=\"../agregarproducto.php\" method=\"post\">";
                    echo "<input type=\"hidden\" name=\"idProducto\" value=\"" . $id . "\">";
                    echo "<input type=\"hidden\" name=\"idCat\" value=\"" . $idCat . "\">";
                    echo "<input type=\"hidden\" name=\"precio\" value=\"" . $row_producto['precio'] . "\">";
@@ -117,19 +129,18 @@
 
                    if(isset($_SESSION["admin"])){
                     if($_SESSION["admin"]){
-                      echo "<form action=\"funcionesAdministrador.php\" method=\"post\">";
+                      echo "<form action=\"../funcionesAdministrador.php\" method=\"post\">";
                       echo "
                       <input type=\"hidden\" name=\"idProducto\" value=\"" . $id . "\">
                       <div class=\"row my-4\">
                         <div class=\"col\">
-                          <input type=\"number\" class=\"form-control mx-2\" id=\"unidades\" name=\"unidades\" placeholder=" . $row_producto["unidades"] . ">
+                          <input type=\"number\" class=\"form-control mx-2\" id=\"unidades\" name=\"unidades\" placeholder=\"" . $row_producto["unidades"] . "\">
                         </div>
                         <div class=\"col\">
                           <button type=\"submit\"class=\"btn btn-success\" name=\"accion\" value=\"actualizarProducto\">Actualizar unidades</button>
                         </div>
                         <button type=\"submit\"class=\"btn btn-danger my-5\" name=\"accion\" value=\"eliminarProducto\">Eliminar producto</button>
                       </div>";
-                      echo "</div>";
                       echo "</form>";
                     }
                   } 

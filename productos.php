@@ -24,20 +24,20 @@
 <body>
   <nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #99846e;">
         <div class="container-fluid">
-          <a class="navbar-brand" href="index.php">Tienda perifericos</a>
+          <a class="navbar-brand" href="../index.php">Tienda perifericos</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="mynavbar">
           <ul class="navbar-nav me-auto">
               <li class="nav-item">
-                <a class="nav-link" href="productos.php?idCat=1">Mouse</a>
+                <a class="nav-link" href="../productos.php?idCat=1">Mouse</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="productos.php?idCat=2">Teclado</a>
+                <a class="nav-link" href="../productos.php?idCat=2">Teclado</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="productos.php?idCat=3">Mousepad</a>
+                <a class="nav-link" href="../productos.php?idCat=3">Mousepad</a>
               </li>
             </ul>
             <form class="d-flex">
@@ -59,7 +59,7 @@
                   while($row = mysqli_fetch_array($result)){
                       echo "<div class=\"col-md my-3\">";
                       echo "<div class=\"card\" style=\"width:400px;  color: #735334;\">";
-                      echo "<a href=\"detalles.php?id=" . $row['id'] . "&idCat=" . $row['idCat'] . "&idObj=" . $row['idObj'] . 
+                      echo "<a href=\"frontend/detalles.php?id=" . $row['id'] . "&idCat=" . $row['idCat'] . "&idObj=" . $row['idObj'] . 
                       " \"style=\"text-decoration: none;  color: #735334;\">";
                       echo "<img class=\"card-img-top\" src=\"rsc/productos/" . $row['img'] . "\" alt=\"" . $row['modelo'] . "\">";
                       echo "<h4 class=\"card-title mx-3\">" . $row['modelo'] . "</h4>";
