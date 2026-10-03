@@ -4,6 +4,8 @@ Un sistema de comercio electrónico web especializado en la venta de periférico
 
 - - - 
 
+![Screenshot pagina de productos](screenshot.png)
+
 ## Arquitectura del Sistema
 
 El proyecto opera como un "monorepo" que integra la tienda con un flujo de ingesta automatizada de datos:
